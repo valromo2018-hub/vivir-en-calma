@@ -233,6 +233,23 @@ a{color:var(--accent)}
 .kriya h2{font-style:italic;font-weight:400;font-size:2rem}
 .kcheck{display:flex;gap:.65rem;align-items:center;font-weight:700;cursor:pointer;padding:.6rem .9rem;border-radius:12px;background:var(--surface);justify-self:start}
 .kcheck input{width:1.3rem;height:1.3rem;accent-color:var(--agave);flex:none}
+.momentos{display:grid;gap:1rem}
+.mom{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:1.1rem 1.15rem;display:grid;gap:.6rem}
+.mom.ahora{border:2px solid var(--accent);padding:calc(1.1rem - 1px) calc(1.15rem - 1px)}
+.mom > header{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.mom > header .ico{width:28px;height:28px}
+.m-manana > header .ico{color:var(--gold)}
+.m-tarde > header .ico{color:var(--agave)}
+.m-noche > header .ico{color:var(--night)}
+.mom > header div{display:grid;flex:1;min-width:0}
+.mom h3{font-size:1.375rem}
+.mom .hab li:last-child{border-bottom:0}
+.mom .cnt{font-size:.875rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.estira{border-top:1px solid var(--line);padding-top:.85rem;display:grid;gap:.65rem}
+.estira h4{font-size:1.25rem}
+.paso-e{padding:1rem;border-radius:14px;background:var(--night-soft);display:grid;gap:.35rem}
+.paso-e .timer{color:var(--night)}
+.c-estirar{--c0:var(--leaf-soft);--c1:var(--aura4);--c2:var(--leaf);--c3:var(--aura2)}
 
 /* Tips */
 .tips{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
@@ -360,6 +377,7 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
   <symbol id="i-gota" viewBox="0 0 24 24"><path d="M12 3.2c3.2 4.4 6 7.9 6 11a6 6 0 0 1-12 0c0-3.1 2.8-6.6 6-11z"/></symbol>
   <symbol id="i-luna" viewBox="0 0 24 24"><path d="M19.5 14.8A7.8 7.8 0 1 1 9.2 4.5a6.3 6.3 0 0 0 10.3 10.3z"/></symbol>
   <symbol id="i-corazon" viewBox="0 0 24 24"><path d="M12 20.3l-1.2-1.1C6.2 15.1 3.4 12.5 3.4 9.1 3.4 6.4 5.5 4.3 8.1 4.3c1.5 0 3 .7 3.9 1.9.9-1.2 2.4-1.9 3.9-1.9 2.6 0 4.7 2.1 4.7 4.8 0 3.4-2.8 6-7.4 10.1L12 20.3z"/></symbol>
+  <symbol id="i-tarde" viewBox="0 0 24 24"><path d="M3.5 17.5h17M7 17.5a5 5 0 0 1 10 0M12 7v2.5M5.8 10.3l1.6 1.6M18.2 10.3l-1.6 1.6M7 21h10"/></symbol>
   <symbol id="i-plato" viewBox="0 0 24 24"><path d="M3.5 12.5h17a8.5 8.5 0 0 1-17 0z"/><path d="M9 9c0-1.4 1-1.6 1-3M13 9c0-1.4 1-1.6 1-3"/></symbol>
 </svg>
 
@@ -377,7 +395,7 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
   <button class="tab" type="button" data-v="hoy" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-hoy"/></svg><span>Hoy</span></button>
   <button class="tab" type="button" data-v="mente"><svg class="ico" aria-hidden="true"><use href="#i-mente"/></svg><span>Mente</span></button>
   <button class="tab" type="button" data-v="cuerpo"><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><span>Cuerpo</span></button>
-  <button class="tab" type="button" data-v="ritual"><svg class="ico" aria-hidden="true"><use href="#i-ritual"/></svg><span>Mi día</span></button>
+  <button class="tab" type="button" data-v="ritual"><svg class="ico" aria-hidden="true"><use href="#i-ritual"/></svg><span>Avisos</span></button>
   <button class="tab" type="button" data-v="avance"><svg class="ico" aria-hidden="true"><use href="#i-avance"/></svg><span>Avance</span></button>
   <button class="tab" type="button" data-v="plan"><svg class="ico" aria-hidden="true"><use href="#i-plan"/></svg><span>Mi plan</span></button>
 </div></nav>
@@ -399,6 +417,45 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
     <div class="row">
       <button class="btn" id="afOtra" type="button">Otra</button>
       <button class="btn" id="afFav" type="button" aria-pressed="false">Guardar</button>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="semline" id="semline"></div>
+    <div class="row between"><h2>Tu día</h2><span class="muted" id="habN">0 de 13</span></div>
+    <div class="prog" aria-hidden="true"><span id="habBar"></span></div>
+    <div class="momentos">
+      <article class="mom m-manana" id="m-manana">
+        <header><svg class="ico" aria-hidden="true"><use href="#i-hoy"/></svg><div><h3>Mañana</h3><span class="mini" id="mh-manana">5:00 am a 12:00 pm</span></div><span class="tag" hidden>Ahora</span><span class="cnt" id="mc-manana"></span></header>
+        <ul class="hab" id="hab-manana"></ul>
+        <div class="sueno">
+          <label for="sueno">Anoche dormí</label>
+          <input class="campo num" type="number" id="sueno" min="0" max="12" step="0.5" inputmode="decimal" placeholder="horas">
+          <span class="mini">horas · la meta es 7</span>
+        </div>
+      </article>
+      <article class="mom m-tarde" id="m-tarde">
+        <header><svg class="ico" aria-hidden="true"><use href="#i-tarde"/></svg><div><h3>Tarde</h3><span class="mini">12:00 pm a 7:00 pm</span></div><span class="tag" hidden>Ahora</span><span class="cnt" id="mc-tarde"></span></header>
+        <ul class="hab" id="hab-tarde"></ul>
+        <p class="mini" id="tardeLiga"></p>
+      </article>
+      <article class="mom m-noche" id="m-noche">
+        <header><svg class="ico" aria-hidden="true"><use href="#i-luna"/></svg><div><h3>Noche</h3><span class="mini" id="mh-noche">7:00 pm a 9:45 pm</span></div><span class="tag" hidden>Ahora</span><span class="cnt" id="mc-noche"></span></header>
+        <ul class="hab" id="hab-noche"></ul>
+        <div class="estira">
+          <div class="row between"><h4>Estiramientos para dormir</h4><span class="mini">unos 8 minutos</span></div>
+          <p class="mini">En tu cama o en un tapete, despacio y sin dolor. Respira lento en cada postura.</p>
+          <div class="paso-e">
+            <span class="eyebrow" id="eN">8 posturas</span>
+            <h4 id="eT">Toca empezar y te guío una por una</h4>
+            <p id="eD"></p>
+            <span class="timer" id="eTmr" role="timer"></span>
+          </div>
+          <div class="row"><button class="btn primary" id="eGo" type="button">Empezar</button><button class="btn" id="eSig" type="button" hidden>Siguiente postura</button></div>
+          <details class="menu"><summary>Ver las 8 posturas</summary><ol id="eLista"></ol></details>
+          <p class="mini" id="eVideo"></p>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -475,17 +532,6 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
     </div>
   </section>
 
-  <section class="blk">
-    <div class="semline" id="semline"></div>
-    <div class="row between"><h2>Mi día en calma</h2><span class="muted" id="habN">0 de 7</span></div>
-    <div class="prog" aria-hidden="true"><span id="habBar"></span></div>
-    <ul class="hab" id="hab"></ul>
-    <div class="sueno">
-      <label for="sueno">Anoche dormí</label>
-      <input class="campo num" type="number" id="sueno" min="0" max="12" step="0.5" inputmode="decimal" placeholder="horas">
-      <span class="mini">horas · la meta es 7</span>
-    </div>
-  </section>
 
   <section class="blk">
     <div class="row between"><h2>Hoy te toca comer</h2><button class="btn small" type="button" id="verMenu">Ver la semana</button></div>
@@ -621,7 +667,7 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
     <ul class="tips">
       <li><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><div><b>Tus 5 clases son tu base</b>Sculpt, barre y Pilates cuidan tu músculo. Siempre con el permiso de tu médico.</div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><div><b>Camina 10 minutos después de comer o cenar</b>Ayuda a la digestión y corta el antojo de la noche.</div></li>
-      <li><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><div><b>Estírate 5 minutos antes de dormir</b>Suelta la tensión del día frente a la compu.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><div><b>Estírate antes de dormir</b>La rutina guiada de 8 minutos está en Hoy, en tu bloque de la noche. Suelta la tensión del día frente a la compu.</div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><div><b>Un día de descanso de verdad a la semana</b>El músculo también crece cuando descansas.</div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-corazon"/></svg><div><b>Cuida tu piso pélvico</b>Pilates y barre lo trabajan. Si notas presión abajo en la panza o se te escapa la orina, coméntalo con tu ginecóloga.</div></li>
     </ul>
@@ -736,19 +782,6 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
 
 <!-- MI DIA -->
 <div class="view" id="v-ritual" hidden>
-  <section class="blk">
-    <h2>Mi día en calma</h2>
-    <p class="lead">Un día ideal, de la mañana a la noche. No tienes que hacerlo todo. Empieza por la noche, que es donde más ganas.</p>
-    <ol class="ritual" id="ritual"></ol>
-  </section>
-  <section class="blk">
-    <h2>Cada semana</h2>
-    <div class="semanal">
-      <div><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><h3>Naturaleza</h3><p class="mini">Una caminata entre árboles o en un parque. Sin audífonos un rato.</p></div>
-      <div><svg class="ico" aria-hidden="true"><use href="#i-corazon"/></svg><h3>Conexión</h3><p class="mini">Una comida o un café con alguien que quieres, sin hablar de trabajo.</p></div>
-      <div><svg class="ico" aria-hidden="true"><use href="#i-mente"/></svg><h3>Algo solo para ti</h3><p class="mini">Un baño largo, leer, bailar, una crema. Un premio que no sea comida.</p></div>
-    </div>
-  </section>
 
   <section class="blk">
     <h2>Que tu app te avise</h2>
@@ -770,6 +803,14 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
     <p class="mini">Si a esa hora tu celular está bloqueado, te llega un aviso. Tócalo y se abre tu app. Cuando agregues la app a tu pantalla de inicio, si te aparece «Abrir como app web», apágalo. Así tus avisos abren la misma app, con tus datos.</p>
     <h3>En Android</h3>
     <p>Crea en Google Calendar un evento diario para cada hora, con aviso, y pega el enlace en la descripción. Al tocar el aviso, abres tu app.</p>
+  </section>
+  <section class="blk">
+    <h2>Cada semana</h2>
+    <div class="semanal">
+      <div><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><h3>Naturaleza</h3><p class="mini">Una caminata entre árboles o en un parque. Sin audífonos un rato.</p></div>
+      <div><svg class="ico" aria-hidden="true"><use href="#i-corazon"/></svg><h3>Conexión</h3><p class="mini">Una comida o un café con alguien que quieres, sin hablar de trabajo.</p></div>
+      <div><svg class="ico" aria-hidden="true"><use href="#i-mente"/></svg><h3>Algo solo para ti</h3><p class="mini">Un baño largo, leer, bailar, una crema. Un premio que no sea comida.</p></div>
+    </div>
   </section>
 </div>
 
@@ -1004,12 +1045,16 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
   $$('.indice a').forEach(function(a){ a.addEventListener('click', function(ev){ ev.preventDefault(); var t = document.getElementById(a.dataset.ir); if (t) t.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'start'}); }); });
 
   /* ---------- Meditaciones (YouTube) ---------- */
-  var CAT = {dormir:'Para dormir', estres:'Para el estrés', antojo:'Para el antojo', cuerpo:'Tu cuerpo', compasion:'Para no regañarte', manana:'Para la mañana'};
+  var CAT = {dormir:'Para dormir', estirar:'Para estirar', estres:'Para el estrés', antojo:'Para el antojo', cuerpo:'Tu cuerpo', compasion:'Para no regañarte', manana:'Para la mañana'};
   var MEDS = [
     {id:'v-pq2RQ7o1s', c:['dormir'], t:'Yoga Nidra de 10 minutos', g:'Anabel Otero', d:'11 min', n:'Acostada. Relaja todo el cuerpo. Ideal antes de dormir.'},
     {id:'cnFVmvbztKQ', c:['dormir'], t:'Meditación corta para tu rutina de noche', g:'Mirelle Maya', d:'8 min', n:'Corta, para hacerla ya en la cama.'},
     {id:'vFrHhwCOaW0', c:['dormir'], t:'Meditación para dormir profundamente', g:'Gabriela Litschi', d:'15 min', n:'De las más escuchadas en español para dormir.'},
     {id:'q6Ae0fiCS0I', c:['dormir'], t:'Yoga Nidra para descanso profundo', g:'Anabel Otero', d:'22 min', n:'Para las noches en que te cuesta soltar el día.'},
+    {id:'i2WsfawlmTY', c:['estirar','dormir'], t:'Yoga en la cama para dormir', g:'Anabel Otero', d:'11 min', n:'Posturas suaves que haces ya acostada.'},
+    {id:'p6mYnMJQAh8', c:['estirar'], t:'Yoga para dormir bien', g:'Patry Durán', d:'13 min', n:'Estiramientos relajantes para soltar el día.'},
+    {id:'1yk3oX3v6XY', c:['estirar'], t:'Estiramientos antes de dormir', g:'Luly Garza Yoga', d:'7 min', n:'Corta, para las noches con poco tiempo.'},
+    {id:'q1AEQEYCru4', c:['estirar'], t:'Cuello y espalda después de la compu', g:'gymvirtual · Patry Jordán', d:'9 min', n:'Para soltar la tensión de estar sentada todo el día.'},
     {id:'_lOpSbsm9y4', c:['estres','antojo'], t:'5 minutos para calmar el sistema nervioso', g:'Anabel Otero', d:'6 min', n:'Una pausa entre juntas o cuando llega el antojo.'},
     {id:'EGO5m_DBzF8', c:['estres'], t:'Respiración 4-7-8 para la ansiedad', g:'Gabriela Litschi', d:'7 min', n:'Te enseña una respiración que puedes usar en cualquier lado.'},
     {id:'9-IOMXpv7Ys', c:['estres'], t:'Mindfulness de 10 minutos para el estrés', g:'Psicología en Serio · Guillermo Orozco', d:'10 min', n:'Guiada por un psicólogo mexicano.'},
@@ -1162,23 +1207,30 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
   $('#despierto').addEventListener('change', function(){ store.set('despierto', this.value || '05:00'); pintarDescanso(); pintarHab(); pintarRitual(); });
 
   /* ---------- Lista del dia ---------- */
+  var BLOQUES = ['manana','tarde','noche'];
   function itemsHoy(){
     var h = horasDescanso();
     return [
-      ['luz','descanso','Descanso','10 minutos de luz natural en la mañana'],
-      ['mente','mente','Mente','Mi Sudarshan Kriya de la mañana'],
-      ['mov','cuerpo','Cuerpo','Mi clase o una caminata de 10 minutos'],
-      ['prot','comida','Comida','Proteína en cada comida y colación a las 5'],
-      ['cocina','comida','Noche','Postre planeado y cocina cerrada'],
-      ['compu','descanso','Descanso','Compu cerrada a las ' + horaBonita(h.compu)],
-      ['nochemed','descanso','Noche','Meditación o Yoga Nidra antes de dormir'],
-      ['gozo','conexion','Conexión','Algo que disfruté que no fue comida']
+      ['agua1','manana','Un vaso de agua al despertar'],
+      ['mente','manana','Mi Sudarshan Kriya, en ayunas'],
+      ['desayuno','manana','Desayuno con proteína'],
+      ['mov','manana','Mi clase y 10 minutos de sol'],
+      ['comida','tarde','Comida sin pantalla y 10 minutos caminando'],
+      ['colacion','tarde','Colación a las 5 y un vaso de agua'],
+      ['pausa','tarde','Una pausa de 5 minutos para respirar'],
+      ['gozo','tarde','Algo que disfruté que no fue comida'],
+      ['cena','noche','Cena con proteína a las ' + horaBonita(h.cama - 150)],
+      ['cocina','noche','Postre planeado y cocina cerrada'],
+      ['compu','noche','Compu cerrada a las ' + horaBonita(h.compu)],
+      ['estira','noche','Mis estiramientos para dormir'],
+      ['nochemed','noche','Meditación o Yoga Nidra, y 3 cosas buenas del día']
     ];
   }
   function progreso(){
-    var n = $$('#hab input:checked').length, tot = $$('#hab input').length;
-    $('#habN').textContent = n + ' de ' + tot;
-    $('#habBar').style.width = (tot ? n / tot * 100 : 0) + '%';
+    var todos = $$('.momentos .hab input'), n = todos.filter(function(c){ return c.checked; }).length;
+    $('#habN').textContent = n + ' de ' + todos.length;
+    $('#habBar').style.width = (todos.length ? n / todos.length * 100 : 0) + '%';
+    BLOQUES.forEach(function(b){ var cs = $$('#hab-' + b + ' input'); $('#mc-' + b).textContent = cs.filter(function(c){ return c.checked; }).length + ' de ' + cs.length; });
     var kh = $('#kriyaHoy'); if (kh) kh.checked = !!store.get('dia:' + HOY, {}).mente;
   }
   $('#kriyaHoy').addEventListener('change', function(){
@@ -1187,14 +1239,19 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
   });
   function pintarHab(){
     var st = store.get('dia:' + HOY, {});
-    var ul = $('#hab'); ul.innerHTML = '';
+    BLOQUES.forEach(function(b){ $('#hab-' + b).innerHTML = ''; });
     itemsHoy().forEach(function(it){
       var li = el('li'), lb = el('label'), cb = el('input');
       cb.type = 'checkbox'; cb.id = 'hab-' + it[0]; cb.checked = !!st[it[0]];
       cb.addEventListener('change', function(){ var s = store.get('dia:' + HOY, {}); s[it[0]] = cb.checked; store.set('dia:' + HOY, s); progreso(); });
-      lb.htmlFor = cb.id; lb.appendChild(cb); lb.appendChild(el('span', 'txt', it[3])); lb.appendChild(el('span', 'pilar p-' + it[1], it[2]));
-      li.appendChild(lb); ul.appendChild(li);
+      lb.htmlFor = cb.id; lb.appendChild(cb); lb.appendChild(el('span', 'txt', it[2]));
+      li.appendChild(lb); $('#hab-' + it[1]).appendChild(li);
     });
+    var h = horasDescanso();
+    $('#mh-manana').textContent = horaBonita(aMin(store.get('despierto', '05:00'))) + ' a 12:00 pm';
+    $('#mh-noche').textContent = '7:00 pm a ' + horaBonita(h.cama);
+    var ahoraB = (H < 4 || H >= 19) ? 'noche' : H < 12 ? 'manana' : 'tarde';
+    BLOQUES.forEach(function(b){ var c = $('#m-' + b); c.classList.toggle('ahora', b === ahoraB); c.querySelector('.tag').hidden = (b !== ahoraB); });
     progreso();
   }
   var sv = store.get('sueno:' + HOY, null);
@@ -1212,7 +1269,7 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
       ['noche','i-corazon','Noche',['Cena con proteína, 2 a 3 horas antes de dormir.','Postre planeado y cocina cerrada.','Compu cerrada a las ' + horaBonita(h.compu) + '.']],
       ['noche','i-luna','Antes de dormir · ' + horaBonita(h.cama),['Luz baja, sin pantalla, solo sorbos de agua.','Estírate 5 minutos.',ligaMed('v-pq2RQ7o1s') + ' y tres cosas buenas de hoy en tu diario.']]
     ];
-    var ol = $('#ritual'); ol.innerHTML = '';
+    var ol = $('#ritual'); if (!ol) return; ol.innerHTML = '';
     var marcado = false;
     R.forEach(function(r){
       var li = el('li');
@@ -1527,6 +1584,54 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
   }
   $('#inicio').addEventListener('change', function(){ store.set('inicio', this.value || null); pintarSemanas(); });
   $('#inicioHoy').addEventListener('click', function(){ store.set('inicio', HOY); pintarSemanas(); });
+
+  /* ---------- Estiramientos para dormir ---------- */
+  var ESTIRA = [
+    ['Respira con las manos en el vientre', 'Acostada boca arriba, con las rodillas dobladas. Siente cómo sube y baja tu panza.', 60],
+    ['Rodillas al pecho', 'Abraza tus rodillas y mécete suave de lado a lado. Suelta la espalda baja.', 60],
+    ['Torsión suave, lado derecho', 'Brazos en cruz. Deja caer las rodillas a la derecha y mira a la izquierda.', 30],
+    ['Torsión suave, lado izquierdo', 'Ahora las rodillas a la izquierda y la mirada a la derecha.', 30],
+    ['Mariposa acostada', 'Junta las plantas de los pies y abre las rodillas. Si quieres, pon almohadas debajo.', 60],
+    ['Postura del niño', 'De rodillas, siéntate sobre los talones y lleva la frente al colchón o a una almohada.', 60],
+    ['Cuello y hombros', 'Sentada, oreja derecha al hombro 30 segundos y luego la izquierda. Hombros abajo.', 60],
+    ['Piernas en la pared', 'Acostada, sube las piernas apoyadas en la pared o en la cabecera. Respira lento.', 120]
+  ];
+  var eI = -1, eLeft = 0, eInt = null;
+  function eParar(){ clearInterval(eInt); eInt = null; }
+  function ePintar(){
+    var sig = $('#eSig');
+    if (eI < 0){ $('#eN').textContent = ESTIRA.length + ' posturas'; $('#eT').textContent = 'Toca empezar y te guío una por una'; $('#eD').textContent = ''; $('#eTmr').textContent = ''; $('#eGo').textContent = 'Empezar'; sig.hidden = true; return; }
+    if (eI >= ESTIRA.length){ $('#eN').textContent = 'Listo'; $('#eT').textContent = 'Terminaste. Ahora a dormir.'; $('#eD').textContent = 'Si quieres, pon tu Yoga Nidra o tu meditación de noche.'; $('#eTmr').textContent = ''; $('#eGo').textContent = 'Otra vez'; sig.hidden = true; return; }
+    var p = ESTIRA[eI];
+    $('#eN').textContent = 'Postura ' + (eI + 1) + ' de ' + ESTIRA.length;
+    $('#eT').textContent = p[0]; $('#eD').textContent = p[1];
+    $('#eTmr').textContent = fmt(eLeft);
+    $('#eGo').textContent = eInt ? 'Pausar' : 'Seguir';
+    sig.hidden = false;
+  }
+  function eIr(i){
+    eI = i;
+    if (eI >= ESTIRA.length){
+      eParar();
+      var s = store.get('dia:' + HOY, {}); s.estira = true; store.set('dia:' + HOY, s); pintarHab();
+      ePintar(); return;
+    }
+    eLeft = ESTIRA[eI][2]; ePintar();
+  }
+  function eCorrer(){
+    eParar();
+    eInt = setInterval(function(){ eLeft--; if (eLeft <= 0) eIr(eI + 1); else ePintar(); }, 1000);
+    ePintar();
+  }
+  $('#eGo').addEventListener('click', function(){
+    if (eI < 0 || eI >= ESTIRA.length){ eIr(0); eCorrer(); return; }
+    if (eInt){ eParar(); ePintar(); } else eCorrer();
+  });
+  $('#eSig').addEventListener('click', function(){ var corria = !!eInt; eIr(eI + 1); if (eI < ESTIRA.length && !corria) ePintar(); });
+  ESTIRA.forEach(function(p){ $('#eLista').appendChild(el('li', null, p[0] + ' · ' + (p[2] >= 60 ? (p[2] / 60) + ' min' : p[2] + ' segundos'))); });
+  $('#eVideo').innerHTML = 'Si prefieres un video: ' + ligaMed('i2WsfawlmTY') + '.';
+  $('#tardeLiga').innerHTML = 'Para tu pausa: ' + ligaMed('_lOpSbsm9y4') + ', o la respiración de un minuto en Mente.';
+  ePintar();
 
   /* ---------- Copiar enlace para los avisos ---------- */
   $('#copiarLiga').addEventListener('click', function(){
