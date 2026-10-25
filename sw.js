@@ -1,5 +1,5 @@
 // Vivir en Calma: guarda la app en el celular para que abra sin internet
-const CACHE = 'vivir-en-calma-4a5a54d554';
+const CACHE = 'vivir-en-calma-704b353b6f';
 const BASE = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-192.png', './icon-512.png'];
 const FUENTES = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 

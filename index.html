@@ -602,12 +602,12 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
     <h2>Descanso</h2>
     <p class="lead">Dormir poco hace que al otro día tengas más hambre, más antojo de dulce y menos paciencia. Es tu cambio más importante.</p>
     <div class="calc">
-      <div class="row"><label for="despierto">Me levanto a las</label><input class="campo" type="time" id="despierto" value="06:30"></div>
-      <p>Para dormir 7 horas, acuéstate a las <b id="hDormir">11:15 pm</b></p>
-      <p class="mini" id="hCompu">Cierra la compu a las 10:15 pm.</p>
+      <div class="row"><label for="despierto">Me levanto a las</label><input class="campo" type="time" id="despierto" value="05:00"></div>
+      <p>Para dormir 7 horas, acuéstate a las <b id="hDormir">9:45 pm</b></p>
+      <p class="mini" id="hCompu">Cierra la compu a las 8:45 pm.</p>
     </div>
     <ul class="tips">
-      <li><svg class="ico" aria-hidden="true"><use href="#i-hoy"/></svg><div><b>10 minutos de luz natural al despertar</b>Le dice a tu cuerpo que empezó el día, y en la noche te da sueño a tiempo.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-hoy"/></svg><div><b>10 minutos de luz natural en la mañana</b>Cuando salga el sol, aunque sea camino a tu clase. Le dice a tu cuerpo que empezó el día, y en la noche te da sueño a tiempo.</div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-luna"/></svg><div><b>Cafeína solo antes de las 2 pm</b>Se queda en tu cuerpo muchas horas.</div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-luna"/></svg><div><b>Media hora antes de dormir</b>Luz baja, sin pantalla, un té de manzanilla y tu meditación de noche.</div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-luna"/></svg><div><b>Cuarto fresco, oscuro y en silencio</b>El celular lejos de la cama.</div></li>
@@ -754,9 +754,9 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
     <h2>Que tu app te avise</h2>
     <p class="lead">La página no puede sonar sola, pero tu celular sí puede abrirla a la hora que tú digas. Te sugiero estas tres horas.</p>
     <div class="avisos">
-      <div><b>6:45 am</b><span>Buenos días: agua, luz y tu afirmación.</span></div>
+      <div><b>5:00 am</b><span>Buenos días: agua, tu Sudarshan Kriya y tu afirmación.</span></div>
       <div><b>5:00 pm</b><span>Tu colación y una pausa de 5 minutos.</span></div>
-      <div><b>9:30 pm</b><span>Tu noche: postre, cocina cerrada y meditación.</span></div>
+      <div><b>8:30 pm</b><span>Tu noche: postre, cocina cerrada y meditación.</span></div>
     </div>
     <div class="liga"><span id="ligaApp">https://valromo2018-hub.github.io/vivir-en-calma/</span><button class="btn small" id="copiarLiga" type="button">Copiar enlace</button></div>
     <h3>En iPhone, con la app Atajos</h3>
@@ -847,7 +847,7 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
       <h3><span>2</span> · Descanso</h3>
       <ul class="lista">
         <li>Hora fija para levantarte, y para acostarte según tu sección de Descanso.</li>
-        <li>Luz natural 10 minutos al despertar.</li>
+        <li>Luz natural 10 minutos en la mañana, cuando salga el sol.</li>
         <li>Cada semana, 30 minutos antes a la cama, hasta llegar a 7 horas.</li>
       </ul>
     </div>
@@ -954,7 +954,7 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
     var h = Math.floor(min / 60), m = min % 60;
     return (h % 12 === 0 ? 12 : h % 12) + ':' + pad(m) + ' ' + (h >= 12 ? 'pm' : 'am');
   };
-  var aMin = function(hhmm){ var p = String(hhmm || '06:30').split(':'); return (+p[0]) * 60 + (+p[1] || 0); };
+  var aMin = function(hhmm){ var p = String(hhmm || '05:00').split(':'); return (+p[0]) * 60 + (+p[1] || 0); };
 
   /* ---------- Saludo ---------- */
   $('#saludo').textContent = (H < 12 ? 'Buenos días' : H < 19 ? 'Buenas tardes' : 'Buenas noches') + ', Valeria';
@@ -1149,17 +1149,17 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
 
   /* ---------- Descanso ---------- */
   function horasDescanso(){
-    var w = aMin(store.get('despierto', '06:30'));
+    var w = aMin(store.get('despierto', '05:00'));
     var cama = w - 435, compu = cama - 60;
     return {cama: cama, compu: compu};
   }
   function pintarDescanso(){
-    $('#despierto').value = store.get('despierto', '06:30');
+    $('#despierto').value = store.get('despierto', '05:00');
     var h = horasDescanso();
     $('#hDormir').textContent = horaBonita(h.cama);
     $('#hCompu').textContent = 'Cierra la compu a las ' + horaBonita(h.compu) + ', una hora antes.';
   }
-  $('#despierto').addEventListener('change', function(){ store.set('despierto', this.value || '06:30'); pintarDescanso(); pintarHab(); pintarRitual(); });
+  $('#despierto').addEventListener('change', function(){ store.set('despierto', this.value || '05:00'); pintarDescanso(); pintarHab(); pintarRitual(); });
 
   /* ---------- Lista del dia ---------- */
   function itemsHoy(){
@@ -1205,8 +1205,8 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
   function pintarRitual(){
     var h = horasDescanso();
     var R = [
-      ['manana','i-hoy','Al despertar',['Un vaso de agua.','10 minutos de luz natural.','Tu Sudarshan Kriya, en ayunas.','Tu afirmación del día.']],
-      ['manana','i-mente','Mañana',['Desayuno con proteína, después de tu Kriya.','Tu clase.']],
+      ['manana','i-hoy','Al despertar · ' + horaBonita(aMin(store.get('despierto', '05:00'))),['Un vaso de agua.','Tu Sudarshan Kriya, en ayunas.','Tu afirmación del día.']],
+      ['manana','i-mente','Mañana',['Desayuno con proteína, después de tu Kriya.','Tu clase.','10 minutos de luz natural cuando salga el sol.']],
       ['mediodia','i-plato','Mediodía',['Un vaso de agua y comida sin pantalla.','10 minutos caminando después de comer.']],
       ['tarde','i-gota','5 o 6 de la tarde',['Colación con proteína y un vaso de agua.','Una pausa: ' + ligaMed('_lOpSbsm9y4') + '.']],
       ['noche','i-corazon','Noche',['Cena con proteína, 2 a 3 horas antes de dormir.','Postre planeado y cocina cerrada.','Compu cerrada a las ' + horaBonita(h.compu) + '.']],
@@ -1478,7 +1478,7 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
   /* ---------- El mes ---------- */
   var SEM = [
     {t:'La noche', i:['El primer día, pésate y mide tu cintura en Avance.','Cena, postre planeado y cocina cerrada.','Yoga Nidra o meditación de noche, al menos 3 noches.','Si llega el antojo, toca «Tengo un antojo».']},
-    {t:'Descanso', i:['Hora fija para levantarte y para acostarte.','10 minutos de luz natural al despertar.','Sin pantalla media hora antes de dormir.','Domingo: pésate y mide tu cintura.']},
+    {t:'Descanso', i:['Hora fija para levantarte y para acostarte.','10 minutos de luz natural cuando salga el sol.','Sin pantalla media hora antes de dormir.','Domingo: pésate y mide tu cintura.']},
     {t:'Cuerpo', i:['Proteína en cada comida y colación de la tarde.','Tus 10 vasos de agua.','10 minutos caminando después de comer.','Domingo: cocina para 3 días, y mídete.']},
     {t:'Mente y gozo', i:['Tu Sudarshan Kriya cada mañana y una meditación de noche.','Tres cosas buenas en tu diario cada noche.','Algo que disfrutes cada día que no sea comida.','Última medida del mes y tu InBody.']}
   ];
