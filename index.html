@@ -1048,7 +1048,7 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
       box.appendChild(a);
     });
   }
-  function ligaMed(id, txt){ var m = MED[id]; return '<a href="' + yt(id) + '" target="_blank" rel="noopener">' + (txt || m.t) + ' (' + m.d + ')</a>'; }
+  function ligaMed(id, txt){ var m = MED[id], t = txt || m.t; return '<a href="' + yt(id) + '" target="_blank" rel="noopener">' + t + (/minutos/.test(t) ? '' : ' (' + m.d + ')') + '</a>'; }
 
   /* ---------- Check-in ---------- */
   var ENER = [['pila','Con pila'],['normal','Normal'],['cansada','Cansada']];
