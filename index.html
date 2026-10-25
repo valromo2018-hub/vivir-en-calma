@@ -1,0 +1,1548 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f8f3f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171215" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-title" content="En Calma">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Vivir en Calma</title>
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,300..500&display=swap">
+<style>
+/* Layout: app de bienestar de una columna (max 46rem). En telefono, barra de 6 secciones fija abajo; en pantallas anchas, pestanas fijas arriba. Seis pilares con color propio: mente (agave), descanso (noche), agua (agave claro), cuerpo (hoja), comida (cempasuchil), conexion (jamaica). */
+:root{
+  --bg:#f8f3f4; --surface:#fffcfd; --ink:#2a1f25; --muted:#6b5a63; --line:#e8dce1;
+  --accent:#9f2d4c; --accent-ink:#ffffff; --accent-soft:#f5e3e9;
+  --agave:#2b686b; --agave-soft:#dcecec;
+  --night:#3a4675; --night-soft:#e2e5f2;
+  --gold:#8a6417; --gold-soft:#f6ecd6;
+  --leaf:#3e6c47; --leaf-soft:#e1ede2;
+  --crit:#b0402f; --crit-soft:#f6e0dc;
+  --aura1:#e9a3b6; --aura2:#9fcfcf; --aura3:#f1cf8c; --aura4:#b9c1e6;
+  --f-display:"Newsreader","Iowan Old Style",Georgia,serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171215; --surface:#211a1e; --ink:#f3e9ee; --muted:#b6a5ae; --line:#382d33;
+    --accent:#eb8aa4; --accent-ink:#2a0c16; --accent-soft:#3a2029;
+    --agave:#7cc3c2; --agave-soft:#183133;
+    --night:#a7b2e6; --night-soft:#1f2440;
+    --gold:#e0b65f; --gold-soft:#3a2f1c;
+    --leaf:#8fc597; --leaf-soft:#1f3324;
+    --crit:#ec8a7b; --crit-soft:#3d221e;
+    --aura1:#7a2c45; --aura2:#1f5a5c; --aura3:#6b5320; --aura4:#333d6e;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171215; --surface:#211a1e; --ink:#f3e9ee; --muted:#b6a5ae; --line:#382d33;
+  --accent:#eb8aa4; --accent-ink:#2a0c16; --accent-soft:#3a2029;
+  --agave:#7cc3c2; --agave-soft:#183133;
+  --night:#a7b2e6; --night-soft:#1f2440;
+  --gold:#e0b65f; --gold-soft:#3a2f1c;
+  --leaf:#8fc597; --leaf-soft:#1f3324;
+  --crit:#ec8a7b; --crit-soft:#3d221e;
+  --aura1:#7a2c45; --aura2:#1f5a5c; --aura3:#6b5320; --aura4:#333d6e;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1.0625rem;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:46rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:500;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,7vw,3rem);font-style:italic;font-weight:400;letter-spacing:-.01em}
+h2{font-size:1.75rem}
+h3{font-size:1.25rem}
+p{margin:0}
+.eyebrow{font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.muted{color:var(--muted)}
+.mini{font-size:.875rem;color:var(--muted)}
+.lead{color:var(--muted);max-width:62ch}
+.lista{margin:0;padding-left:1.2rem;display:grid;gap:.45rem}
+.row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.between{justify-content:space-between}
+.view{display:grid;gap:2.75rem}
+.stack{display:grid;gap:2rem}
+.blk{display:grid;gap:.9rem;min-width:0}
+.ico{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* Navegacion: abajo en telefono, arriba en pantallas anchas */
+.nav{z-index:20;background:var(--surface);border-top:1px solid var(--line)}
+.nav .wrap{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.15rem}
+.tab{font:inherit;background:none;border:0;color:var(--muted);cursor:pointer;display:grid;justify-items:center;gap:.1rem;padding:.5rem 0 .45rem;border-radius:12px;font-size:.6875rem;line-height:1.2}
+.tab:hover{color:var(--ink)}
+.tab[aria-current="page"]{color:var(--accent);font-weight:700}
+.tab[aria-current="page"] .ico{stroke-width:2.1}
+@media (max-width:719px){
+  .nav{position:fixed;left:0;right:0;bottom:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+  main .wrap{padding-bottom:calc(6rem + env(safe-area-inset-bottom,0px))}
+}
+@media (min-width:720px){
+  .nav{position:sticky;top:env(safe-area-inset-top,0px);border-top:0;border-bottom:1px solid var(--line);background:var(--bg)}
+  .tab{grid-auto-flow:column;gap:.45rem;font-size:.9375rem;padding:.75rem .25rem;align-items:center}
+  .tab .ico{width:19px;height:19px}
+  main .wrap{padding-bottom:3rem}
+}
+main .wrap{padding-top:1.25rem}
+
+/* Hero con aura */
+.hero{position:relative;overflow:hidden;border-radius:0 0 28px 28px;background:var(--surface)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;padding-block:2.25rem 1.75rem;display:grid;gap:.5rem}
+.hero .marca{font-family:var(--f-display);font-size:1.0625rem;font-style:italic;color:var(--muted)}
+.hero .fecha{color:var(--muted)}
+.momento{justify-self:start;display:inline-flex;align-items:center;gap:.4rem;font-size:.8125rem;font-weight:700;padding:.25rem .7rem;border-radius:999px;background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+
+/* Botones y campos */
+.btn,.chip{font:inherit;font-size:.9375rem;padding:.55rem 1rem;min-height:44px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.btn:hover,.chip:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.btn.small{min-height:36px;padding:.3rem .8rem;font-size:.875rem}
+.btn:disabled{opacity:.45;cursor:default}
+.btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.campo{font:inherit;padding:.45rem .7rem;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:100%}
+.campo.num{width:6.5rem;font-variant-numeric:tabular-nums}
+textarea.campo{width:100%;min-height:4.5rem;resize:vertical;line-height:1.5}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* Check-in */
+.checkin{display:grid;gap:.9rem;padding:1.25rem;border-radius:var(--r);background:var(--surface);border:1px solid var(--line)}
+.checkin .q{display:grid;gap:.45rem}
+.sugerencia{display:grid;gap:.6rem;padding:1rem 1.1rem;border-radius:14px;background:var(--agave-soft)}
+.sugerencia p{display:flex;gap:.6rem;align-items:flex-start}
+.sugerencia .ico{margin-top:.15rem;color:var(--agave)}
+.sugerencia a{font-weight:700}
+
+/* Afirmacion */
+.afcard{background:var(--accent-soft);border-radius:var(--r);padding:1.4rem 1.25rem;display:grid;gap:.9rem}
+.afcard blockquote{margin:0;font-family:var(--f-display);font-style:italic;font-size:clamp(1.4rem,4.6vw,1.9rem);line-height:1.25;text-wrap:balance}
+
+/* Agua */
+.agua{display:grid;gap:.75rem;padding:1.25rem;border-radius:var(--r);background:var(--agave-soft)}
+.gotas{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:.3rem}
+.gota{border:0;background:none;padding:.15rem 0;cursor:pointer;color:var(--agave);display:grid;place-items:center;min-height:44px}
+.gota svg{width:100%;max-width:30px;height:auto}
+.gota path{fill:transparent;stroke:currentColor;stroke-width:1.6}
+.gota[aria-pressed="true"] path{fill:currentColor}
+.agua .cuenta{font-family:var(--f-display);font-size:1.5rem;font-variant-numeric:tabular-nums}
+
+/* Antojo */
+.antojo{width:100%;font-family:var(--f-display);font-size:1.4rem;padding:1rem 1.25rem;border-radius:var(--r);border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.antojo small{font-family:var(--f-body);font-size:.875rem;opacity:.9}
+.pausa{scroll-margin-top:4.5rem;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:1.25rem;display:grid;gap:1.25rem}
+.pasos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.375rem}
+.pasos li{display:grid;justify-items:center;padding:.35rem .1rem;border-radius:10px;background:var(--bg);color:var(--muted);text-align:center}
+.pasos b{font-family:var(--f-display);font-size:1.25rem;font-weight:500;line-height:1.1;font-variant-numeric:tabular-nums}
+.pasos small{font-size:.6875rem;line-height:1.2}
+.pasos li.hecho{color:var(--accent)}
+.pasos li.on{background:var(--accent);color:var(--accent-ink)}
+.paso{display:grid;gap:1rem}
+.breath{display:grid;place-items:center;height:190px}
+.circ{width:170px;height:170px;max-width:100%;border-radius:50%;background:radial-gradient(circle at 40% 35%,var(--aura2),var(--agave));transform:scale(.6);transition-property:transform;transition-timing-function:ease-in-out}
+.circ.rosa{background:radial-gradient(circle at 40% 35%,var(--accent-soft),var(--accent))}
+.btxt{text-align:center;font-family:var(--f-display);font-size:1.375rem}
+.bn{text-align:center;color:var(--muted);font-size:.875rem;font-variant-numeric:tabular-nums;min-height:1.4em}
+.qq{display:flex;gap:.65rem;align-items:flex-start;cursor:pointer}
+.qq input,.hab input{width:1.25rem;height:1.25rem;margin-top:.2rem;accent-color:var(--accent);flex:none}
+.result{padding:.85rem 1rem;border-radius:12px;background:var(--gold-soft);display:grid;gap:.75rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.timer{font-family:var(--f-display);font-size:2.75rem;font-variant-numeric:tabular-nums;line-height:1}
+.timerbox{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.sust{margin:0;padding-left:1.2rem;display:grid;gap:.5rem}
+
+/* Lista integral */
+.prog{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;background:var(--leaf);transition:width .3s}
+.hab{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.hab li{border-bottom:1px solid var(--line)}
+.hab label{display:flex;gap:.75rem;align-items:flex-start;padding:.7rem .25rem;cursor:pointer}
+.hab .txt{flex:1;min-width:0}
+.pilar{font-size:.6875rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.15rem .5rem;border-radius:999px;white-space:nowrap;align-self:center}
+.p-mente{background:var(--agave-soft);color:var(--agave)}
+.p-descanso{background:var(--night-soft);color:var(--night)}
+.p-cuerpo{background:var(--leaf-soft);color:var(--leaf)}
+.p-comida{background:var(--gold-soft);color:var(--gold)}
+.p-conexion{background:var(--accent-soft);color:var(--accent)}
+.sueno{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;padding:.7rem .25rem;border-bottom:1px solid var(--line)}
+.semline{display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap;padding:.9rem 1rem;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.semline > div{display:grid;gap:.1rem;min-width:0}
+
+/* Comidas */
+.comidas{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.comidas li{display:grid;grid-template-columns:7.5rem minmax(0,1fr) auto;gap:.75rem;align-items:baseline;padding:.75rem .1rem;border-bottom:1px solid var(--line)}
+.comidas .t{font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.comidas .g{font-size:.8125rem;color:var(--accent);font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:520px){.comidas li{grid-template-columns:minmax(0,1fr) auto}.comidas .t{grid-column:1 / -1}}
+.dias{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.3rem}
+.dias .chip{padding:.45rem 0;border-radius:10px;font-weight:700}
+
+/* Meditaciones */
+.meds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+@media (max-width:560px){.meds{grid-template-columns:minmax(0,1fr)}}
+.med{display:grid;gap:.5rem;text-decoration:none;color:var(--ink);min-width:0}
+.med:hover .art{transform:translateY(-2px)}
+.art{position:relative;aspect-ratio:16 / 9;max-width:100%;border-radius:16px;overflow:hidden;transition:transform .2s;background:
+  radial-gradient(circle at 22% 30%,var(--c1) 0,transparent 55%),
+  radial-gradient(circle at 78% 72%,var(--c2) 0,transparent 52%),
+  radial-gradient(circle at 60% 15%,var(--c3) 0,transparent 40%),
+  var(--c0)}
+.art .play{position:absolute;left:14px;bottom:12px;width:42px;height:42px;border-radius:50%;background:var(--surface);color:var(--ink);display:grid;place-items:center}
+.art .play svg{width:18px;height:18px;fill:currentColor}
+.art .dur{position:absolute;right:12px;bottom:14px;font-size:.8125rem;font-weight:700;padding:.15rem .55rem;border-radius:999px;background:var(--surface);color:var(--ink);font-variant-numeric:tabular-nums}
+.med h3{font-size:1.1875rem}
+.med .guia{font-size:.875rem;color:var(--muted)}
+.med .nota{font-size:.9375rem}
+.c-dormir{--c0:var(--night-soft);--c1:var(--aura4);--c2:var(--night);--c3:var(--aura1)}
+.c-estres{--c0:var(--agave-soft);--c1:var(--aura2);--c2:var(--agave);--c3:var(--aura3)}
+.c-antojo{--c0:var(--accent-soft);--c1:var(--aura1);--c2:var(--accent);--c3:var(--aura3)}
+.c-cuerpo{--c0:var(--leaf-soft);--c1:var(--aura2);--c2:var(--leaf);--c3:var(--aura3)}
+.c-compasion{--c0:var(--accent-soft);--c1:var(--aura1);--c2:var(--aura4);--c3:var(--aura3)}
+.c-manana{--c0:var(--gold-soft);--c1:var(--aura3);--c2:var(--aura1);--c3:var(--aura2)}
+
+/* Ritual */
+.ritual{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.ritual > li{display:grid;grid-template-columns:2.75rem minmax(0,1fr);gap:.9rem;position:relative;padding-bottom:1.5rem}
+.ritual > li::before{content:"";position:absolute;left:1.375rem;top:2.75rem;bottom:0;width:2px;background:var(--line);transform:translateX(-1px)}
+.ritual > li:last-child::before{display:none}
+.ritual .dot{width:2.75rem;height:2.75rem;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+.ritual .cuerpo{display:grid;gap:.35rem;min-width:0;padding-top:.35rem}
+.ritual .hora{font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.ritual ul{margin:0;padding-left:1.1rem;display:grid;gap:.3rem}
+.ritual li.ahora .dot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.semanal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media (max-width:600px){.semanal{grid-template-columns:minmax(0,1fr)}}
+.semanal > div{padding:1rem;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:grid;gap:.3rem;align-content:start}
+.avisos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem}
+@media (max-width:560px){.avisos{grid-template-columns:minmax(0,1fr)}}
+.avisos > div{padding:1rem;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:grid;gap:.2rem;align-content:start}
+.avisos b{font-family:var(--f-display);font-weight:500;font-size:1.375rem;font-variant-numeric:tabular-nums;color:var(--accent)}
+.liga{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:.6rem .8rem;border-radius:12px;background:var(--accent-soft)}
+.liga span{flex:1;min-width:0;font-size:.875rem;word-break:break-all;user-select:all}
+.kriya{background:var(--agave-soft);border-radius:var(--r);padding:1.4rem 1.25rem;display:grid;gap:.75rem}
+.kriya h2{font-style:italic;font-weight:400;font-size:2rem}
+.kcheck{display:flex;gap:.65rem;align-items:center;font-weight:700;cursor:pointer;padding:.6rem .9rem;border-radius:12px;background:var(--surface);justify-self:start}
+.kcheck input{width:1.3rem;height:1.3rem;accent-color:var(--agave);flex:none}
+
+/* Tips */
+.tips{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.tips li{display:grid;grid-template-columns:2rem minmax(0,1fr);gap:.75rem;padding:.8rem 0;border-bottom:1px solid var(--line)}
+.tips li .ico{color:var(--agave);margin-top:.2rem}
+.tips b{display:block}
+.indice{display:flex;flex-wrap:wrap;gap:.5rem}
+.indice a{text-decoration:none}
+.sec{scroll-margin-top:5rem}
+.calc{padding:1rem 1.1rem;border-radius:14px;background:var(--night-soft);display:grid;gap:.5rem}
+.calc b{font-family:var(--f-display);font-weight:500;font-size:1.375rem;color:var(--night)}
+
+/* Mi plan */
+.estado{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--line)}
+.estado li{display:grid;grid-template-columns:6.5rem minmax(0,1fr);gap:.75rem;align-items:baseline;padding:.7rem 0;border-bottom:1px solid var(--line)}
+.pill,.tag{font-size:.75rem;font-weight:700;letter-spacing:.03em;padding:.2rem .6rem;border-radius:999px;white-space:nowrap;justify-self:start}
+.pill.bien,.pill.pasar,.tag.hecha{background:var(--leaf-soft);color:var(--leaf)}
+.pill.clave{background:var(--accent);color:var(--accent-ink)}
+.pill.ojo,.pill.consciente{background:var(--gold-soft);color:var(--gold)}
+.pill.auto{background:var(--crit-soft);color:var(--crit)}
+.tag{background:var(--accent);color:var(--accent-ink)}
+.quiero{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin:0}
+.quiero > div{padding:.9rem 1rem;display:grid;gap:.15rem}
+.quiero > div + div{border-left:1px solid var(--line)}
+.quiero dt{font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.quiero dd{margin:0;font-family:var(--f-display);font-size:1.375rem;line-height:1.2}
+@media (max-width:520px){.quiero{grid-template-columns:minmax(0,1fr)}.quiero > div + div{border-left:0;border-top:1px solid var(--line)}}
+.realista{padding:1rem 1.1rem;border-radius:14px;background:var(--leaf-soft);display:grid;gap:.4rem}
+.realista b{color:var(--leaf)}
+.palanca{display:grid;gap:.5rem;padding-top:1rem;border-top:2px solid var(--ink)}
+.palanca h3 span{font-variant-numeric:tabular-nums;color:var(--accent)}
+.frases{list-style:none;margin:0;padding:0;display:grid;gap:.75rem}
+.frases li{display:grid;gap:.15rem}
+.frases s{color:var(--muted)}
+.frases b{font-family:var(--f-display);font-weight:500;font-size:1.25rem}
+.nota{font-size:.9375rem;padding:.9rem 1rem;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.semanas{display:grid;gap:1rem}
+.sem{border:1px solid var(--line);border-radius:var(--r);padding:1.1rem 1.25rem;display:grid;gap:.6rem;background:var(--surface)}
+.sem.actual{background:var(--accent-soft);border-color:transparent}
+.sem header{display:flex;justify-content:space-between;align-items:center;gap:.75rem;flex-wrap:wrap}
+.sem .n{font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.sem > ul{margin:0;padding-left:1.2rem;display:grid;gap:.3rem}
+
+/* Desplegables */
+.menus{border-bottom:1px solid var(--line)}
+details.menu{border-top:1px solid var(--line)}
+details.menu summary{cursor:pointer;padding:.85rem .25rem;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+details.menu summary::-webkit-details-marker{display:none}
+details.menu summary::after{content:"+";color:var(--accent);font-size:1.25rem;line-height:1}
+details.menu[open] > summary::after{content:"\2013"}
+details.menu ul,details.menu ol{margin:0 0 1rem;padding-left:1.2rem;display:grid;gap:.4rem}
+details.menu .d{margin:0 0 .75rem}
+.super{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 1.5rem;padding-bottom:1rem}
+.super h4{font-family:var(--f-body);margin:0 0 .3rem;font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.super ul{margin:0;padding-left:1.1rem;display:grid;gap:.2rem;font-size:.9375rem}
+@media (max-width:520px){.super{grid-template-columns:minmax(0,1fr)}}
+
+/* Plato y escala */
+.plato{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1.75rem;align-items:center}
+.disc{width:150px;aspect-ratio:1;max-width:100%;border-radius:50%;background:conic-gradient(var(--accent) 0 25%,var(--gold) 25% 50%,var(--leaf) 50% 100%);box-shadow:0 0 0 10px var(--surface),0 0 0 11px var(--line);margin:11px}
+.leyenda{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
+.leyenda li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:.65rem;align-items:start}
+.leyenda span.d{display:block;font-size:.9375rem;color:var(--muted)}
+.sw{width:14px;height:14px;border-radius:4px;margin-top:.35rem}
+.sw.v{background:var(--leaf)} .sw.p{background:var(--accent)} .sw.c{background:var(--gold)} .sw.g{background:var(--gold-soft);border:2px solid var(--gold)}
+@media (max-width:500px){.plato{grid-template-columns:minmax(0,1fr);justify-items:center}.leyenda{justify-self:stretch}}
+.escala{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px}
+.escala div{padding:.5rem 0;text-align:center;font-weight:700;font-size:.9375rem;font-variant-numeric:tabular-nums;border-radius:6px}
+.e-crit{background:var(--crit-soft);color:var(--crit)}
+.e-ok{background:var(--leaf-soft);color:var(--leaf)}
+.e-neu{background:var(--line);color:var(--ink)}
+.e-warn{background:var(--gold-soft);color:var(--gold)}
+.escala-leg{list-style:none;margin:0;padding:0;display:grid;gap:.4rem;font-size:.9375rem}
+.escala-leg li{display:grid;grid-template-columns:3.2rem minmax(0,1fr);gap:.5rem}
+.escala-leg b{font-variant-numeric:tabular-nums}
+
+/* Avance */
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.kpi{padding:1rem;display:grid;gap:.25rem;align-content:start;border-bottom:1px solid var(--line)}
+.kpi:nth-child(odd){border-right:1px solid var(--line)}
+.kpi:nth-last-child(-n+2){border-bottom:0}
+.kpi .l{font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.kpi b{font-family:var(--f-display);font-size:2.1rem;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.05}
+.kpi b.baja{color:var(--leaf)}
+.kpi b.sube{color:var(--crit)}
+.kpi span.s{font-size:.875rem;color:var(--muted);line-height:1.35}
+.form{display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:flex-end}
+.form label{display:grid;gap:.25rem;font-size:.875rem;color:var(--muted)}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:.9375rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;vertical-align:middle;padding:.6rem .8rem;border-bottom:1px solid var(--line)}
+th{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.nums td:first-child{font-weight:700}
+.nums td:nth-child(2){white-space:nowrap}
+.reg{list-style:none;margin:0;padding:0;display:grid}
+.reg li{display:flex;justify-content:space-between;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--line);font-size:.9375rem;font-variant-numeric:tabular-nums}
+.empty{color:var(--muted);padding:.9rem 1rem;border:1px dashed var(--line);border-radius:12px;font-size:.9375rem}
+.reg li.empty{display:block}
+.aviso{font-size:.9375rem;padding:.85rem 1rem;border-radius:12px;background:var(--crit-soft);color:var(--crit)}
+
+/* Afirmaciones y diario */
+.afgrupo{display:grid;gap:.25rem}
+.aflist{list-style:none;margin:0;padding:0}
+.aflist li{display:flex;gap:1rem;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--line)}
+.aflist p{font-family:var(--f-display);font-style:italic;font-size:1.1875rem;line-height:1.35;min-width:0}
+.fav{flex:none;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.fav[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.diario{display:grid;gap:1rem;padding:1.25rem;border-radius:var(--r);background:var(--surface);border:1px solid var(--line)}
+.diario label{display:grid;gap:.35rem;font-family:var(--f-display);font-size:1.125rem}
+
+footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;border-top:1px solid var(--line)}
+@media (max-width:719px){footer .wrap{padding-bottom:calc(6.5rem + env(safe-area-inset-bottom,0px))}main .wrap{padding-bottom:2rem}}
+@media (prefers-reduced-motion: reduce){.circ,.prog span,.art{transition:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-hoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-mente" viewBox="0 0 24 24"><path d="M12 20c-4.2 0-7.5-3-7.5-7 3 0 5.5 1.3 7.5 4 2-2.7 4.5-4 7.5-4 0 4-3.3 7-7.5 7z"/><path d="M12 17c-1.6-2-2.4-4-2.4-6.2 0-2.2.8-4.3 2.4-6.3 1.6 2 2.4 4.1 2.4 6.3 0 2.2-.8 4.2-2.4 6.2z"/></symbol>
+  <symbol id="i-cuerpo" viewBox="0 0 24 24"><circle cx="12" cy="4.8" r="2"/><path d="M5 9.5l7 1.8 7-1.8M12 11.3v4.2M8.8 21l3.2-5.5 3.2 5.5"/></symbol>
+  <symbol id="i-ritual" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-avance" viewBox="0 0 24 24"><path d="M4 4.5V19.5H20"/><path d="M7.5 15l3.5-4 3 2.5 4.5-6"/></symbol>
+  <symbol id="i-plan" viewBox="0 0 24 24"><path d="M6.5 3.5h8l3 3v14h-11z"/><path d="M9.5 10h5M9.5 13.5h5M9.5 17h3"/></symbol>
+  <symbol id="i-gota" viewBox="0 0 24 24"><path d="M12 3.2c3.2 4.4 6 7.9 6 11a6 6 0 0 1-12 0c0-3.1 2.8-6.6 6-11z"/></symbol>
+  <symbol id="i-luna" viewBox="0 0 24 24"><path d="M19.5 14.8A7.8 7.8 0 1 1 9.2 4.5a6.3 6.3 0 0 0 10.3 10.3z"/></symbol>
+  <symbol id="i-corazon" viewBox="0 0 24 24"><path d="M12 20.3l-1.2-1.1C6.2 15.1 3.4 12.5 3.4 9.1 3.4 6.4 5.5 4.3 8.1 4.3c1.5 0 3 .7 3.9 1.9.9-1.2 2.4-1.9 3.9-1.9 2.6 0 4.7 2.1 4.7 4.8 0 3.4-2.8 6-7.4 10.1L12 20.3z"/></symbol>
+  <symbol id="i-plato" viewBox="0 0 24 24"><path d="M3.5 12.5h17a8.5 8.5 0 0 1-17 0z"/><path d="M9 9c0-1.4 1-1.6 1-3M13 9c0-1.4 1-1.6 1-3"/></symbol>
+</svg>
+
+<header class="hero">
+  <canvas id="aura" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="marca">Vivir en calma</p>
+    <h1 id="saludo">Hola, Valeria</h1>
+    <p class="fecha" id="fecha">Hoy</p>
+    <span class="momento" id="momento">Mañana</span>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Secciones"><div class="wrap">
+  <button class="tab" type="button" data-v="hoy" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-hoy"/></svg><span>Hoy</span></button>
+  <button class="tab" type="button" data-v="mente"><svg class="ico" aria-hidden="true"><use href="#i-mente"/></svg><span>Mente</span></button>
+  <button class="tab" type="button" data-v="cuerpo"><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><span>Cuerpo</span></button>
+  <button class="tab" type="button" data-v="ritual"><svg class="ico" aria-hidden="true"><use href="#i-ritual"/></svg><span>Mi día</span></button>
+  <button class="tab" type="button" data-v="avance"><svg class="ico" aria-hidden="true"><use href="#i-avance"/></svg><span>Avance</span></button>
+  <button class="tab" type="button" data-v="plan"><svg class="ico" aria-hidden="true"><use href="#i-plan"/></svg><span>Mi plan</span></button>
+</div></nav>
+
+<main><div class="wrap">
+
+<!-- HOY -->
+<div class="view" id="v-hoy">
+  <section class="checkin" aria-labelledby="ciT">
+    <h2 id="ciT">¿Cómo estás hoy?</h2>
+    <div class="q"><span class="mini">Tu energía</span><div class="chips" id="ciE"></div></div>
+    <div class="q"><span class="mini">Tu ánimo</span><div class="chips" id="ciA"></div></div>
+    <div class="sugerencia" id="sug" aria-live="polite"></div>
+  </section>
+
+  <section class="afcard" aria-labelledby="afLbl">
+    <p class="eyebrow" id="afLbl">Afirmación de hoy</p>
+    <blockquote id="afDia">Puedo sentir estrés sin resolverlo con comida.</blockquote>
+    <div class="row">
+      <button class="btn" id="afOtra" type="button">Otra</button>
+      <button class="btn" id="afFav" type="button" aria-pressed="false">Guardar</button>
+    </div>
+  </section>
+
+  <section class="agua" aria-labelledby="aguaT">
+    <div class="row between">
+      <h2 id="aguaT">Mi agua</h2>
+      <span class="cuenta" id="aguaN">0 de 10 vasos</span>
+    </div>
+    <div class="gotas" id="gotas" role="group" aria-label="Vasos de agua de hoy"></div>
+    <p class="mini" id="aguaTip">Cada gota es un vaso de 250 ml. La meta son 10 vasos, unos 2.5 litros.</p>
+  </section>
+
+  <section class="blk">
+    <button class="antojo" id="abrirPausa" type="button" aria-expanded="false" aria-controls="pausa">Tengo un antojo <small>5 pasos · unos 3 minutos</small></button>
+
+    <div class="pausa" id="pausa" hidden>
+      <ol class="pasos" aria-label="Pasos">
+        <li><b>1</b><small>Respira</small></li>
+        <li><b>2</b><small>¿Hambre?</small></li>
+        <li><b>3</b><small>Espera</small></li>
+        <li><b>4</b><small>Otra cosa</small></li>
+        <li><b>5</b><small>Decide</small></li>
+      </ol>
+      <div class="paso">
+        <h3>Respira</h3>
+        <p>Toma aire por la nariz y suéltalo despacito por la boca, 3 veces. Sigue el círculo.</p>
+        <div class="breath" aria-hidden="true"><div class="circ rosa" id="circ"></div></div>
+        <p class="btxt" id="btxt" aria-live="polite">Cuando estés lista, empieza.</p>
+        <p class="bn" id="bn"></p>
+        <div class="row"><button class="btn primary" id="bStart" type="button">Empezar</button></div>
+      </div>
+      <div class="paso" hidden>
+        <h3>¿Es hambre o es antojo?</h3>
+        <label class="qq" for="q1"><input type="checkbox" id="q1"> Ahorita me comería un huevo cocido o unas verduras.</label>
+        <label class="qq" for="q2"><input type="checkbox" id="q2"> Las ganas me llegaron de golpe.</label>
+        <label class="qq" for="q3"><input type="checkbox" id="q3"> Cené o comí hace menos de 3 horas.</label>
+        <p class="result" id="hRes" aria-live="polite"></p>
+      </div>
+      <div class="paso" hidden>
+        <h3>Espera 10 minutos</h3>
+        <p>Primero toma un vaso de agua o un té caliente. A veces es sed o cansancio. Las ganas suben, llegan a lo más alto y luego bajan solas.</p>
+        <div class="timerbox">
+          <span class="timer" id="tmr" role="timer">10:00</span>
+          <div class="row">
+            <button class="btn primary" id="tGo" type="button">Empezar 10 minutos</button>
+            <button class="btn" id="tReset" type="button">Reiniciar</button>
+          </div>
+        </div>
+        <p class="mini" id="tMsg" aria-live="polite"></p>
+      </div>
+      <div class="paso" hidden>
+        <h3>Haz otra cosa</h3>
+        <p>¿Qué sientes? Elige uno y te digo qué te ayuda.</p>
+        <div class="chips" id="emos" role="group" aria-label="Lo que siento"></div>
+        <ul class="sust" id="sust" aria-live="polite"></ul>
+      </div>
+      <div class="paso" hidden>
+        <h3>Decide</h3>
+        <p>¿Qué pasó? Anotarlo te deja ver tu avance.</p>
+        <div class="chips" id="decide">
+          <button class="btn" type="button" data-r="pasar">Se me pasó</button>
+          <button class="btn" type="button" data-r="consciente">Voy a comer, sentada y despacio</button>
+          <button class="btn" type="button" data-r="auto">Ya comí sin pensar</button>
+        </div>
+        <div class="result" id="fin" hidden aria-live="polite"></div>
+      </div>
+      <div class="row between">
+        <button class="btn" id="pAtras" type="button">Atrás</button>
+        <div class="row">
+          <button class="btn" id="pCerrar" type="button">Cerrar</button>
+          <button class="btn primary" id="pSig" type="button">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="semline" id="semline"></div>
+    <div class="row between"><h2>Mi día en calma</h2><span class="muted" id="habN">0 de 7</span></div>
+    <div class="prog" aria-hidden="true"><span id="habBar"></span></div>
+    <ul class="hab" id="hab"></ul>
+    <div class="sueno">
+      <label for="sueno">Anoche dormí</label>
+      <input class="campo num" type="number" id="sueno" min="0" max="12" step="0.5" inputmode="decimal" placeholder="horas">
+      <span class="mini">horas · la meta es 7</span>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="row between"><h2>Hoy te toca comer</h2><button class="btn small" type="button" id="verMenu">Ver la semana</button></div>
+    <ul class="comidas" id="hoyMenu"></ul>
+  </section>
+</div>
+
+<!-- MENTE -->
+<div class="view" id="v-mente" hidden>
+  <section class="kriya" aria-labelledby="kT">
+    <p class="eyebrow">Tu práctica de cada mañana</p>
+    <h2 id="kT">Sudarshan Kriya</h2>
+    <p>Hazla como te la enseñaron en El Arte de Vivir: en ayunas, sentada derecha y sin prisa. Es la base de tu día. Hay estudios que muestran que ayuda a bajar el estrés y la ansiedad y a dormir mejor.</p>
+    <ul class="lista">
+      <li>Antes, solo tu vaso de agua. Después, tu desayuno con proteína y tu clase.</li>
+      <li>En la noche, cierra el día con una meditación para dormir.</li>
+    </ul>
+    <label class="kcheck" for="kriyaHoy"><input type="checkbox" id="kriyaHoy"> Hoy ya hice mi Kriya</label>
+  </section>
+
+  <section class="blk">
+    <h2>Meditaciones</h2>
+    <p class="lead">Elegí meditaciones en español, guiadas por psicólogas, psicólogos y maestras de meditación con mucha experiencia. Se abren en YouTube. Con 5 minutos al día ya cuenta.</p>
+    <div class="chips" id="medFiltro" role="group" aria-label="Filtrar por momento"></div>
+    <div class="meds" id="meds"></div>
+  </section>
+
+  <section class="blk">
+    <h2>Respira conmigo un minuto</h2>
+    <p class="lead">Para cualquier momento del día: antes de una junta, en el tráfico o antes de abrir el refri.</p>
+    <div class="breath" aria-hidden="true"><div class="circ" id="circ2"></div></div>
+    <p class="btxt" id="btxt2" aria-live="polite">Toca empezar y sigue el círculo.</p>
+    <p class="bn" id="bn2"></p>
+    <div class="row"><button class="btn primary" id="bStart2" type="button">Empezar</button></div>
+  </section>
+
+  <section class="blk">
+    <h2>Mi diario de hoy</h2>
+    <div class="diario">
+      <label for="d1">¿Cómo me siento hoy, en una palabra?<textarea class="campo" id="d1" rows="2"></textarea></label>
+      <label for="d2">¿Qué necesito de verdad hoy?<textarea class="campo" id="d2" rows="2"></textarea></label>
+      <label for="d3">Tres cosas buenas de hoy<textarea class="campo" id="d3" rows="3"></textarea></label>
+      <p class="mini" id="dMsg">Se guarda solo mientras escribes, en este dispositivo.</p>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h2>Afirmaciones</h2>
+    <p class="lead">Léelas en voz alta, despacio. Guarda tus favoritas con el corazón.</p>
+    <div class="stack" id="afGrupos"></div>
+  </section>
+
+  <section class="blk">
+    <h2>Para cuando te regañes</h2>
+    <ul class="frases">
+      <li><s>Ya la regué.</s><b>Fue una comida. La siguiente la hago bien.</b></li>
+      <li><s>Estoy gorda.</s><b>Estoy cuidando mi cuerpo, y eso lleva tiempo.</b></li>
+      <li><s>No tengo fuerza de voluntad.</s><b>Estaba cansada. Hoy me duermo más temprano.</b></li>
+    </ul>
+  </section>
+
+  <section class="blk">
+    <h2>Extras, si quieres</h2>
+    <div class="menus">
+      <details class="menu"><summary>El ancla: un botón de pausa en tus dedos</summary>
+        <p class="d">¿Te ha pasado que hueles un perfume y te acuerdas de alguien? Tu cerebro juntó ese olor con esa persona. El ancla es hacer eso a propósito con la calma.</p>
+        <ol>
+          <li>Cierra los ojos y acuérdate de un momento en que estabas muy tranquila.</li>
+          <li>Cuando lo sientas fuerte, aprieta el pulgar contra el dedo de en medio unos segundos.</li>
+          <li>Repítelo varias veces, en días distintos.</li>
+          <li>Cuando vayas al refri por estrés, aprieta los dedos. Te recuerda detenerte y respirar.</li>
+        </ol>
+      </details>
+      <details class="menu"><summary>El swish: cambiarle la película al antojo</summary>
+        <p class="d">Cuando se te antoja algo, tu cabeza te pone una película de ese chocolate, y eso te jala.</p>
+        <ol>
+          <li>Imagina el antojo.</li>
+          <li>Hazlo chiquito y gris en tu mente, como una foto vieja.</li>
+          <li>En su lugar, imagínate a ti sintiéndote bien y tranquila.</li>
+          <li>Hazlo rápido unas 5 veces.</li>
+        </ol>
+      </details>
+    </div>
+  </section>
+</div>
+
+<!-- CUERPO -->
+<div class="view" id="v-cuerpo" hidden>
+  <nav class="indice" aria-label="En esta sección">
+    <a class="chip" href="#s-agua" data-ir="s-agua">Agua</a>
+    <a class="chip" href="#s-descanso" data-ir="s-descanso">Descanso</a>
+    <a class="chip" href="#s-mov" data-ir="s-mov">Movimiento</a>
+    <a class="chip" href="#s-comida" data-ir="s-comida">Comida</a>
+    <a class="chip" href="#s-etapa" data-ir="s-etapa">Tu etapa</a>
+  </nav>
+
+  <section class="blk sec" id="s-agua">
+    <h2>Agua</h2>
+    <p class="lead">El agua te da energía, te ayuda a ir bien al baño y muchas veces calma un antojo que en realidad era sed.</p>
+    <ul class="tips">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>Unos 2.5 litros al día</b>Son 10 vasos. Cuentan el agua natural, los tés y las aguas sin azúcar. En días de clase, suma 1 o 2 vasos.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>El primer vaso, al despertar</b>Antes del café.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>Un vaso antes de cada comida</b>Te ayuda a sentirte satisfecha antes.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>Tu botella, siempre a la vista</b>En el escritorio y en la bolsa. Una de 1 litro, llénala dos veces y media.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>Dale sabor sin azúcar</b>Pepino con menta, limón con jengibre, fresa con albahaca, jamaica o canela.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>Si sudaste mucho en clase</b>Agua con una pizca de sal y limón, o un suero sin azúcar.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>Cómo saber si vas bien</b>Si tu orina es amarillo clarito, vas bien. Si es oscura, te falta agua.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>En la noche, solo sorbos</b>Una o dos horas antes de dormir, para no despertarte a ir al baño.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>Lo que no cuenta</b>Refrescos, jugos y aguas de sabor con azúcar. El café sí cuenta, hasta 2 o 3 tazas antes de las 2 pm.</div></li>
+    </ul>
+  </section>
+
+  <section class="blk sec" id="s-descanso">
+    <h2>Descanso</h2>
+    <p class="lead">Dormir poco hace que al otro día tengas más hambre, más antojo de dulce y menos paciencia. Es tu cambio más importante.</p>
+    <div class="calc">
+      <div class="row"><label for="despierto">Me levanto a las</label><input class="campo" type="time" id="despierto" value="06:30"></div>
+      <p>Para dormir 7 horas, acuéstate a las <b id="hDormir">11:15 pm</b></p>
+      <p class="mini" id="hCompu">Cierra la compu a las 10:15 pm.</p>
+    </div>
+    <ul class="tips">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-hoy"/></svg><div><b>10 minutos de luz natural al despertar</b>Le dice a tu cuerpo que empezó el día, y en la noche te da sueño a tiempo.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-luna"/></svg><div><b>Cafeína solo antes de las 2 pm</b>Se queda en tu cuerpo muchas horas.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-luna"/></svg><div><b>Media hora antes de dormir</b>Luz baja, sin pantalla, un té de manzanilla y tu meditación de noche.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-luna"/></svg><div><b>Cuarto fresco, oscuro y en silencio</b>El celular lejos de la cama.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-luna"/></svg><div><b>Si te despiertas pensando en pendientes</b>Ten una libreta junto a la cama. Escríbelos y suéltalos hasta mañana.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-luna"/></svg><div><b>Ve poco a poco</b>Cada semana, acuéstate 30 minutos antes hasta llegar a tu hora.</div></li>
+    </ul>
+  </section>
+
+  <section class="blk sec" id="s-mov">
+    <h2>Movimiento</h2>
+    <ul class="tips">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><div><b>Tus 5 clases son tu base</b>Sculpt, barre y Pilates cuidan tu músculo. Siempre con el permiso de tu médico.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><div><b>Camina 10 minutos después de comer o cenar</b>Ayuda a la digestión y corta el antojo de la noche.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><div><b>Estírate 5 minutos antes de dormir</b>Suelta la tensión del día frente a la compu.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><div><b>Un día de descanso de verdad a la semana</b>El músculo también crece cuando descansas.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-corazon"/></svg><div><b>Cuida tu piso pélvico</b>Pilates y barre lo trabajan. Si notas presión abajo en la panza o se te escapa la orina, coméntalo con tu ginecóloga.</div></li>
+    </ul>
+  </section>
+
+  <section class="blk sec" id="s-comida">
+    <h2>Comida</h2>
+    <p class="lead">Menú de bajo presupuesto: huevo, frijol, lenteja, pollo, atún y sardina, con fruta y verdura de temporada. Cada comida trae unos 25 a 30 g de proteína. Si un día no se te antoja, cámbiala por otra de la lista. Si tu manual de nutrición marca otras porciones, sigue tu manual.</p>
+    <div class="dias" id="dias" role="group" aria-label="Día de la semana"></div>
+    <ul class="comidas" id="diaMenu"></ul>
+    <p class="mini" id="diaNota"></p>
+    <h3>Para ahorrar</h3>
+    <ul class="tips">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-plato"/></svg><div><b>Huevo, frijol y lenteja</b>Son tu proteína más barata. Juntos, como huevos con frijoles, te llenan más.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-plato"/></svg><div><b>Pierna y muslo de pollo</b>Cuestan menos que la pechuga. Quítales la piel.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-plato"/></svg><div><b>Latas de atún y sardina</b>Proteína barata. La sardina además trae calcio y omega 3.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-plato"/></svg><div><b>Soya texturizada</b>Mezclada con carne molida, la carne te rinde el doble.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-plato"/></svg><div><b>Mercado o tianguis, y de temporada</b>En otoño: guayaba, mandarina, calabaza y chayote.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-plato"/></svg><div><b>Cocina el domingo</b>Una olla de frijoles y pollo deshebrado te alcanzan para 3 días.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-plato"/></svg><div><b>Nada se tira</b>Con las tortillas del día anterior haces totopos horneados o chilaquiles.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-gota"/></svg><div><b>Agua de jamaica o de limón hecha en casa</b>Sin azúcar, en lugar de aguas embotelladas.</div></li>
+    </ul>
+    <div class="menus">
+      <details class="menu"><summary>Desayunos para cambiar</summary><ul>
+        <li>Huevos a la mexicana o con nopales, con frijoles y 1 tortilla.</li>
+        <li>Avena cocida en leche con canela y plátano, con 2 huevos cocidos.</li>
+        <li>Molletes con frijoles, queso fresco y pico de gallo, y 1 huevo.</li>
+        <li>Chilaquiles horneados con pollo deshebrado y queso fresco.</li>
+        <li>Hot cakes de avena, plátano y huevo, con un vaso de leche.</li>
+      </ul></details>
+      <details class="menu"><summary>Comidas para cambiar</summary><ul>
+        <li>Pierna y muslo de pollo en caldillo o asados, con verdura y ½ taza de arroz.</li>
+        <li>Lentejas o frijoles guisados con verduras y un huevo duro.</li>
+        <li>Picadillo de soya y res con papa y zanahoria.</li>
+        <li>Mojarra o tilapia a la mexicana con ensalada.</li>
+        <li>Caldo de pollo con verduras y garbanzo.</li>
+        <li>Albóndigas de res y soya en caldillo.</li>
+      </ul></details>
+      <details class="menu"><summary>Colaciones de la tarde</summary><ul>
+        <li>2 huevos cocidos con limón.</li>
+        <li>½ lata de atún con pepino y limón.</li>
+        <li>½ taza de requesón con fruta.</li>
+        <li>1 yogur natural con cacahuates.</li>
+        <li>1 vaso de leche con canela.</li>
+        <li>Jícama y pepino con limón y chile, con un huevo cocido.</li>
+      </ul></details>
+      <details class="menu"><summary>Cenas para cambiar</summary><ul>
+        <li>Tostadas horneadas de atún o de sardina.</li>
+        <li>Tostadas de tinga de pollo.</li>
+        <li>Huevos con nopales y frijoles.</li>
+        <li>Quesadillas de queso fresco con pollo deshebrado.</li>
+        <li>Sopa de lentejas con queso fresco.</li>
+      </ul></details>
+      <details class="menu"><summary>Postres de la noche</summary>
+        <p class="d mini">Justo después de cenar, sentada y despacio. Después, cocina cerrada.</p>
+        <ul>
+          <li>Gelatina de leche light hecha en casa con grenetina y canela.</li>
+          <li>Manzana asada con canela.</li>
+          <li>Helado de plátano: 1 plátano congelado licuado con un poco de cacao.</li>
+          <li>Té de canela con 1 galleta María.</li>
+          <li>Papaya o guayaba con limón.</li>
+          <li>Media taza de avena caliente con canela.</li>
+          <li>Un yogur natural con canela.</li>
+        </ul>
+      </details>
+      <details class="menu"><summary>Lista del súper de la semana</summary>
+        <div class="super">
+          <div><h4>Proteína</h4><ul><li>Huevo (2 docenas)</li><li>Pierna y muslo de pollo</li><li>Atún en agua y sardina en tomate</li><li>Frijol, lenteja y garbanzo</li><li>Soya texturizada</li><li>Un poco de carne molida de res</li><li>Mojarra o tilapia</li><li>Queso fresco y requesón</li><li>Leche y yogur natural</li></ul></div>
+          <div><h4>Verdura</h4><ul><li>Nopales, calabacita y chayote</li><li>Jitomate, cebolla, chile y cilantro</li><li>Zanahoria, papa y chícharo</li><li>Pepino, jícama y col</li><li>Espinaca o acelga</li><li>Lechuga y limón</li></ul></div>
+          <div><h4>Fruta de temporada</h4><ul><li>Plátano y manzana</li><li>Papaya</li><li>Guayaba y mandarina</li><li>Naranja</li></ul></div>
+          <div><h4>Básicos</h4><ul><li>Tortillas de maíz</li><li>Bolillo</li><li>Arroz y avena</li><li>Cacahuates naturales</li><li>Cacao en polvo</li><li>Grenetina sin sabor y canela</li><li>Galletas María</li><li>Flor de jamaica y manzanilla</li><li>Aceite de canola</li></ul></div>
+        </div>
+      </details>
+      <details class="menu"><summary>Tu plato y tu hambre</summary>
+        <div class="plato">
+          <div class="disc" role="img" aria-label="Plato: mitad verdura, un cuarto proteína y un cuarto carbohidrato"></div>
+          <ul class="leyenda">
+            <li><span class="sw v"></span><div><b>Medio plato de verdura</b><span class="d">Nopales, calabacita, espinaca, ensalada.</span></div></li>
+            <li><span class="sw p"></span><div><b>1 palma de proteína</b><span class="d">Huevo, pollo, atún, sardina o frijol con queso.</span></div></li>
+            <li><span class="sw c"></span><div><b>1 puño de carbohidrato</b><span class="d">Tortilla de maíz, frijoles, camote, arroz.</span></div></li>
+            <li><span class="sw g"></span><div><b>1 pulgar de grasa buena</b><span class="d">Un poco de aguacate, aceite o cacahuates.</span></div></li>
+          </ul>
+        </div>
+        <p class="d">¿Cuánta hambre tengo? Pregúntatelo antes de comer y a la mitad del plato.</p>
+        <div class="escala" aria-hidden="true">
+          <div class="e-crit">1</div><div class="e-crit">2</div><div class="e-ok">3</div><div class="e-ok">4</div><div class="e-neu">5</div><div class="e-neu">6</div><div class="e-ok">7</div><div class="e-warn">8</div><div class="e-crit">9</div><div class="e-crit">10</div>
+        </div>
+        <ul class="escala-leg">
+          <li><b>1–2</b><span>Muerta de hambre. Esperaste demasiado.</span></li>
+          <li><b>3–4</b><span>Hambre clara. Buen momento para comer.</span></li>
+          <li><b>5–6</b><span>Ni hambre ni llena.</span></li>
+          <li><b>7</b><span>Satisfecha. Buen momento para parar.</span></li>
+          <li><b>8–10</b><span>Llena o incómoda. Ya te pasaste.</span></li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section class="blk sec" id="s-etapa">
+    <h2>Tu etapa: premenopausia, sin matriz</h2>
+    <p>Te quitaron la matriz pero te dejaron los ovarios. Ya no tienes regla, pero tus ovarios siguen haciendo hormonas, así que sigues en la premenopausia. Tu ciclo sigue aunque ya no sangres.</p>
+    <ul class="lista">
+      <li><b>Puede haber una semana al mes con más hambre o antojo de dulce.</b> Es tu ciclo. Esos días toca «Tengo un antojo» y elige «Semana de más hambre».</li>
+      <li><b>El músculo se pierde más fácil desde los 40.</b> Tus clases y la proteína lo cuidan.</li>
+      <li><b>La grasa tiende a irse al abdomen.</b> La noche y el sueño son donde más ganas.</li>
+      <li><b>El colesterol tiende a subir.</b> Ayudan la avena, el frijol, la lenteja, la sardina y menos fritura.</li>
+      <li><b>Tus huesos necesitan calcio.</b> Unos 1,000 mg al día (leche, yogur, queso, sardina y tortilla de maíz) y ejercicio con peso.</li>
+    </ul>
+    <p class="nota">Como ya no tienes regla, no te va a avisar cuándo llega la menopausia, y a veces llega un poco antes después de quitar la matriz. Pregúntale a tu ginecóloga qué señales vigilar, como calores, sudores en la noche o insomnio, y si conviene medir tus hormonas de vez en cuando.</p>
+  </section>
+</div>
+
+<!-- MI DIA -->
+<div class="view" id="v-ritual" hidden>
+  <section class="blk">
+    <h2>Mi día en calma</h2>
+    <p class="lead">Un día ideal, de la mañana a la noche. No tienes que hacerlo todo. Empieza por la noche, que es donde más ganas.</p>
+    <ol class="ritual" id="ritual"></ol>
+  </section>
+  <section class="blk">
+    <h2>Cada semana</h2>
+    <div class="semanal">
+      <div><svg class="ico" aria-hidden="true"><use href="#i-cuerpo"/></svg><h3>Naturaleza</h3><p class="mini">Una caminata entre árboles o en un parque. Sin audífonos un rato.</p></div>
+      <div><svg class="ico" aria-hidden="true"><use href="#i-corazon"/></svg><h3>Conexión</h3><p class="mini">Una comida o un café con alguien que quieres, sin hablar de trabajo.</p></div>
+      <div><svg class="ico" aria-hidden="true"><use href="#i-mente"/></svg><h3>Algo solo para ti</h3><p class="mini">Un baño largo, leer, bailar, una crema. Un premio que no sea comida.</p></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h2>Que tu app te avise</h2>
+    <p class="lead">La página no puede sonar sola, pero tu celular sí puede abrirla a la hora que tú digas. Te sugiero estas tres horas.</p>
+    <div class="avisos">
+      <div><b>6:45 am</b><span>Buenos días: agua, luz y tu afirmación.</span></div>
+      <div><b>5:00 pm</b><span>Tu colación y una pausa de 5 minutos.</span></div>
+      <div><b>9:30 pm</b><span>Tu noche: postre, cocina cerrada y meditación.</span></div>
+    </div>
+    <div class="liga"><span id="ligaApp">https://valromo2018-hub.github.io/vivir-en-calma/</span><button class="btn small" id="copiarLiga" type="button">Copiar enlace</button></div>
+    <h3>En iPhone, con la app Atajos</h3>
+    <ol class="lista">
+      <li>Abre <b>Atajos</b>, que ya viene en tu iPhone, y toca <b>Automatización</b> abajo.</li>
+      <li>Toca <b>+</b> y elige <b>Hora del día</b>. Pon la hora, <b>Diariamente</b> y <b>Ejecutar inmediatamente</b>.</li>
+      <li>Toca <b>Siguiente</b>, luego <b>Nuevo atajo en blanco</b> y <b>Agregar acción</b>.</li>
+      <li>Busca <b>Abrir URL</b>, pega el enlace de arriba y toca <b>OK</b>.</li>
+      <li>Repite con las otras dos horas.</li>
+    </ol>
+    <p class="mini">Si a esa hora tu celular está bloqueado, te llega un aviso. Tócalo y se abre tu app. Cuando agregues la app a tu pantalla de inicio, si te aparece «Abrir como app web», apágalo. Así tus avisos abren la misma app, con tus datos.</p>
+    <h3>En Android</h3>
+    <p>Crea en Google Calendar un evento diario para cada hora, con aviso, y pega el enlace en la descripción. Al tocar el aviso, abres tu app.</p>
+  </section>
+</div>
+
+<!-- AVANCE -->
+<div class="view" id="v-avance" hidden>
+  <section class="blk">
+    <h2>Mi avance</h2>
+    <p class="lead">Meta del mes: de 2 a 3 kg menos y de 2 a 4 cm menos de cintura, durmiendo y tomando agua mejor.</p>
+    <div class="kpis" id="kpis"></div>
+  </section>
+  <section class="blk">
+    <h2>Anotar mi medida</h2>
+    <p class="lead">Una vez por semana, el mismo día, en la mañana y antes de desayunar. La cintura se mide a la altura del ombligo.</p>
+    <p class="mini">Tu referencia es el InBody del 1 de agosto: 88 kg, 37.8% de grasa y 30.4 kg de músculo. Pésate el día que empieces tu mes. Esa será tu medida de inicio.</p>
+    <form class="form" id="mForm" novalidate>
+      <label for="mFecha">Fecha<input class="campo" type="date" id="mFecha"></label>
+      <label for="mPeso">Peso (kg)<input class="campo num" type="number" id="mPeso" step="0.1" min="30" max="200" inputmode="decimal"></label>
+      <label for="mCint">Cintura (cm)<input class="campo num" type="number" id="mCint" step="0.5" min="40" max="200" inputmode="decimal"></label>
+      <button class="btn primary" type="submit">Guardar</button>
+    </form>
+    <p class="mini" id="mMsg" aria-live="polite"></p>
+    <div id="mTabla"></div>
+  </section>
+  <section class="blk">
+    <h2>Mis antojos de esta semana</h2>
+    <ul class="reg" id="reg"></ul>
+    <p class="aviso" id="aviso" hidden>Este navegador no permite guardar datos, así que lo que anotes se borra al cerrar la página.</p>
+  </section>
+</div>
+
+<!-- MI PLAN -->
+<div class="view" id="v-plan" hidden>
+  <section class="blk">
+    <p class="eyebrow">Tu quiz del 24 de octubre</p>
+    <h2>Cómo estás</h2>
+    <ul class="estado">
+      <li><span class="pill bien">Vas bien</span><span>Comes 3 veces al día, a tus horas.</span></li>
+      <li><span class="pill bien">Vas bien</span><span>Entrenas 5 días a la semana: sculpt, barre o Pilates.</span></li>
+      <li><span class="pill bien">Vas bien</span><span>Haces tu Sudarshan Kriya todas las mañanas.</span></li>
+      <li><span class="pill clave">La clave</span><span>Duermes menos de 6 horas.</span></li>
+      <li><span class="pill clave">La clave</span><span>El antojo de dulce te gana en la noche.</span></li>
+      <li><span class="pill ojo">Ojo</span><span>Te sientes cansada y te regañas.</span></li>
+      <li><span class="pill ojo">Tu etapa</span><span>Te quitaron la matriz hace casi dos años y te dejaron los ovarios. Sigues en premenopausia.</span></li>
+    </ul>
+    <p>Tu base es buena. Comes a tus horas y entrenas más que la mayoría. Lo que falla es la noche. Duermes poco, llegas cansada y un cerebro cansado pide azúcar. Por eso tu plan no te pide más ejercicio. Cuida seis cosas a la vez: tu mente, tu descanso, tu agua, tu cuerpo, tu comida y tu conexión con los demás, empezando por la noche.</p>
+  </section>
+
+  <section class="blk">
+    <h2>Qué quieres</h2>
+    <dl class="quiero">
+      <div><dt>Meta</dt><dd>Bajar grasa</dd></div>
+      <div><dt>Plazo</dt><dd>1 mes</dd></div>
+      <div><dt>Tiempo extra</dt><dd>30 min al día</dd></div>
+    </dl>
+    <div class="realista">
+      <p><b>Lo realista en un mes:</b> de 2 a 3 kg menos y de 2 a 4 cm menos de cintura.</p>
+      <p><b>Tu primer gran objetivo:</b> 5 kg menos de grasa. Con eso pasas de 37.8% a 34% de grasa, el límite sano. Toma unos 2 a 3 meses.</p>
+      <p class="mini">Bajar más rápido casi siempre es agua, y se regresa. Al terminar el mes, repite tu InBody.</p>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h2>Cómo lo hacemos</h2>
+    <p class="lead">Tres cambios, en este orden. Lo que ya haces bien no se toca: tus 3 comidas y tus 5 clases, siempre con el permiso de tu médico.</p>
+    <div class="palanca">
+      <h3><span>1</span> · La noche</h3>
+      <ul class="lista">
+        <li>Cena con proteína, 2 a 3 horas antes de dormir.</li>
+        <li>Justo después, tu postre planeado. Luego cocina cerrada: te lavas los dientes.</li>
+        <li>Pon tu Yoga Nidra de 10 minutos o tu meditación de noche.</li>
+        <li>Si te da antojo, primero agua o té. Casi siempre es sueño.</li>
+      </ul>
+    </div>
+    <div class="palanca">
+      <h3><span>2</span> · Descanso</h3>
+      <ul class="lista">
+        <li>Hora fija para levantarte, y para acostarte según tu sección de Descanso.</li>
+        <li>Luz natural 10 minutos al despertar.</li>
+        <li>Cada semana, 30 minutos antes a la cama, hasta llegar a 7 horas.</li>
+      </ul>
+    </div>
+    <div class="palanca">
+      <h3><span>3</span> · Cuerpo y mente de día</h3>
+      <ul class="lista">
+        <li>30 g de proteína en cada comida y colación a las 5 o 6 pm.</li>
+        <li>10 vasos de agua.</li>
+        <li>Tu Sudarshan Kriya cada mañana, que ya haces, y algo que disfrutes que no sea comida.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h2>Tu mes, semana por semana</h2>
+    <div class="row">
+      <label for="inicio">Empecé el</label>
+      <input class="campo" type="date" id="inicio">
+      <button class="btn" id="inicioHoy" type="button">Empecé hoy</button>
+    </div>
+    <p class="mini" id="semEstado"></p>
+    <div class="semanas" id="semanas"></div>
+  </section>
+
+  <section class="blk">
+    <h2>Tus números</h2>
+    <p class="lead">Los que tienes en tu compu. Son de agosto y sirven como referencia.</p>
+    <h3>Tu cuerpo · InBody ABC, 1 de agosto</h3>
+    <div class="tw"><table class="nums">
+      <thead><tr><th scope="col">Dato</th><th scope="col">Tu número</th><th scope="col">Rango sano</th><th scope="col">Qué significa</th></tr></thead>
+      <tbody>
+        <tr><td>Peso</td><td>88 kg</td><td>—</td><td>Tu referencia. Pésate el día que empieces tu mes.</td></tr>
+        <tr><td>Grasa corporal</td><td><span class="pill ojo">37.8%</span></td><td>23–34%</td><td>Es lo que vamos a bajar. Con 5 kg menos de grasa llegas al 34%.</td></tr>
+        <tr><td>Músculo</td><td><span class="pill bien">30.4 kg</span></td><td>24.4–29.8 kg</td><td>Arriba del promedio, gracias a tus clases. Hay que cuidarlo.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Tus análisis · ABC Santa Fe, 1 de agosto</h3>
+    <div class="tw"><table class="nums">
+      <thead><tr><th scope="col">Dato</th><th scope="col">Tu número</th><th scope="col">Rango sano</th><th scope="col">Qué significa</th></tr></thead>
+      <tbody>
+        <tr><td>Glucosa</td><td><span class="pill bien">79.8 mg/dL</span></td><td>60–100</td><td>Bien.</td></tr>
+        <tr><td>Hemoglobina glicosilada</td><td><span class="pill bien">5.3%</span></td><td>menos de 5.7</td><td>Bien. No hay prediabetes.</td></tr>
+        <tr><td>Colesterol total</td><td><span class="pill ojo">205 mg/dL</span></td><td>hasta 200</td><td>Un poco alto.</td></tr>
+        <tr><td>Colesterol LDL («malo»)</td><td><span class="pill ojo">134 mg/dL</span></td><td>menos de 100</td><td>Alto. Ayudan la avena, el frijol, la sardina y menos fritura.</td></tr>
+        <tr><td>ApoB</td><td><span class="pill ojo">101 mg/dL</span></td><td>menos de 90</td><td>Limítrofe. Va de la mano con el LDL.</td></tr>
+        <tr><td>Colesterol HDL («bueno»)</td><td><span class="pill bien">59 mg/dL</span></td><td>50 o más</td><td>Bien.</td></tr>
+        <tr><td>Triglicéridos</td><td><span class="pill bien">116 mg/dL</span></td><td>menos de 150</td><td>Bien.</td></tr>
+        <tr><td>Tiroides (TSH)</td><td><span class="pill bien">3.56</span></td><td>0.3–5.0</td><td>Normal.</td></tr>
+        <tr><td>Hígado (ALT, AST, GGT)</td><td><span class="pill bien">16 · 17 · 12</span></td><td>en rango</td><td>Bien.</td></tr>
+        <tr><td>Riñón (filtración)</td><td><span class="pill ojo">80.5</span></td><td>90 o más</td><td>Un poco abajo. Tu orina salió normal, así que no es enfermedad. Toma tu agua y coméntalo con tu médico.</td></tr>
+        <tr><td>Hemoglobina</td><td><span class="pill bien">14.4 g/dL</span></td><td>13.5–16.5</td><td>Bien. No hay anemia.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Tus hormonas · Chopo, 9 de agosto</h3>
+    <div class="tw"><table class="nums">
+      <thead><tr><th scope="col">Dato</th><th scope="col">Tu número</th><th scope="col">Rango</th><th scope="col">Qué significa</th></tr></thead>
+      <tbody>
+        <tr><td>FSH</td><td><span class="pill bien">4.85 mUI/mL</span></td><td>en menopausia, más de 25.8</td><td>Tus ovarios trabajan normal.</td></tr>
+        <tr><td>Estradiol</td><td><span class="pill bien">144 pg/mL</span></td><td>de mujer con ciclo</td><td>Normal.</td></tr>
+        <tr><td>LH, progesterona y prolactina</td><td><span class="pill bien">6.31 · 0.34 · 17.2</span></td><td>en rango</td><td>Normales.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="mini">En agosto tus hormonas estaban en el rango de una mujer que todavía tiene ciclo. Por eso sigues en premenopausia.</p>
+  </section>
+</div>
+
+</div></main>
+
+<footer><div class="wrap">
+  <p>Guía personal de bienestar. No sustituye a tu médica, a tu ginecóloga ni a tu nutrióloga. Lo que anotas se guarda solo en este dispositivo.</p>
+</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var PFX = 'cec:';
+  var store = {
+    get: function(k, d){ try { var v = localStorage.getItem(PFX + k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+    set: function(k, v){ try { localStorage.setItem(PFX + k, JSON.stringify(v)); } catch(e){} }
+  };
+  var puedeGuardar = (function(){ try { localStorage.setItem(PFX + 't', '1'); localStorage.removeItem(PFX + 't'); return true; } catch(e){ return false; } })();
+
+  var $ = function(s){ return document.querySelector(s); };
+  var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  var pad = function(n){ return String(n).padStart(2, '0'); };
+  var dkey = function(d){ return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  var deKey = function(k){ return new Date(k + 'T00:00:00'); };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var svgUse = function(id, cls){ return '<svg class="' + (cls || 'ico') + '" aria-hidden="true"><use href="#' + id + '"/></svg>'; };
+
+  var ahora = new Date();
+  var HOY = dkey(ahora);
+  var H = ahora.getHours();
+  var MOM = H < 12 ? 'manana' : H < 15 ? 'mediodia' : H < 19 ? 'tarde' : 'noche';
+  var NOCHE = MOM === 'noche';
+  var DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var fechaLarga = function(d){ return d.getDate() + ' de ' + MESES[d.getMonth()]; };
+  var fechaCorta = function(d){ return d.getDate() + ' ' + MESES[d.getMonth()].slice(0, 3); };
+  var uno = function(n){ return (Math.round(n * 10) / 10).toFixed(1); };
+  var horaBonita = function(min){
+    min = ((min % 1440) + 1440) % 1440;
+    var h = Math.floor(min / 60), m = min % 60;
+    return (h % 12 === 0 ? 12 : h % 12) + ':' + pad(m) + ' ' + (h >= 12 ? 'pm' : 'am');
+  };
+  var aMin = function(hhmm){ var p = String(hhmm || '06:30').split(':'); return (+p[0]) * 60 + (+p[1] || 0); };
+
+  /* ---------- Saludo ---------- */
+  $('#saludo').textContent = (H < 12 ? 'Buenos días' : H < 19 ? 'Buenas tardes' : 'Buenas noches') + ', Valeria';
+  $('#fecha').textContent = DIAS[ahora.getDay()] + ' ' + fechaLarga(ahora);
+  $('#momento').innerHTML = svgUse(NOCHE ? 'i-luna' : 'i-hoy') + '<span>' + ({manana:'Tu mañana', mediodia:'Tu mediodía', tarde:'Tu tarde', noche:'Tu noche'})[MOM] + '</span>';
+
+  /* ---------- Aura ---------- */
+  (function(){
+    var cv = $('#aura'); if (!cv || !cv.getContext) return;
+    var ctx = cv.getContext('2d'), cols = [], w = 0, h = 0, raf = null;
+    function hex(c){ c = c.trim().replace('#', ''); if (c.length === 3) c = c.split('').map(function(x){ return x + x; }).join(''); var n = parseInt(c, 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+    function leer(){ var cs = getComputedStyle(document.documentElement); cols = ['--aura1','--aura2','--aura3','--aura4'].map(function(t){ return hex(cs.getPropertyValue(t) || '#cccccc'); }); }
+    function tam(){ var r = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2); w = r.width; h = r.height; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    var B = [[.15,.3,.55,.00011,.7],[.8,.25,.5,.00009,2.1],[.55,.9,.45,.00013,4.2],[.35,.7,.4,.00007,5.6]];
+    function pintar(t){
+      ctx.clearRect(0, 0, w, h);
+      B.forEach(function(b, i){
+        var x = (b[0] + Math.sin(t * b[3] + b[4]) * .08) * w, y = (b[1] + Math.cos(t * b[3] * 1.3 + b[4]) * .1) * h;
+        var r = b[2] * Math.max(w, h), c = cols[i];
+        var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',.75)');
+        g.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      });
+    }
+    function loop(t){ pintar(t); raf = requestAnimationFrame(loop); }
+    leer(); tam();
+    if (reduce) pintar(2000); else raf = requestAnimationFrame(loop);
+    window.addEventListener('resize', function(){ tam(); if (reduce) pintar(2000); });
+    if (window.matchMedia){ var mq = window.matchMedia('(prefers-color-scheme: dark)'); var on = function(){ leer(); if (reduce) pintar(2000); }; if (mq.addEventListener) mq.addEventListener('change', on); }
+    new MutationObserver(function(){ leer(); if (reduce) pintar(2000); }).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    document.addEventListener('visibilitychange', function(){ if (reduce) return; if (document.hidden){ cancelAnimationFrame(raf); raf = null; } else if (!raf){ raf = requestAnimationFrame(loop); } });
+  })();
+
+  /* ---------- Vistas ---------- */
+  var VISTAS = ['hoy','mente','cuerpo','ritual','avance','plan'];
+  function mostrar(v, subir){
+    if (VISTAS.indexOf(v) < 0) v = 'hoy';
+    VISTAS.forEach(function(x){ $('#v-' + x).hidden = (x !== v); });
+    $$('.tab').forEach(function(t){ if (t.dataset.v === v) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
+    if (v === 'avance') pintarAvance();
+    if (subir) window.scrollTo(0, 0);
+  }
+  function irA(v){ mostrar(v, true); try { history.replaceState(null, '', '#' + v); } catch(e){} }
+  $$('.tab').forEach(function(t){ t.addEventListener('click', function(){ irA(t.dataset.v); }); });
+  window.addEventListener('hashchange', function(){ var v = location.hash.slice(1); if (VISTAS.indexOf(v) >= 0) mostrar(v, true); });
+  $$('.indice a').forEach(function(a){ a.addEventListener('click', function(ev){ ev.preventDefault(); var t = document.getElementById(a.dataset.ir); if (t) t.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'start'}); }); });
+
+  /* ---------- Meditaciones (YouTube) ---------- */
+  var CAT = {dormir:'Para dormir', estres:'Para el estrés', antojo:'Para el antojo', cuerpo:'Tu cuerpo', compasion:'Para no regañarte', manana:'Para la mañana'};
+  var MEDS = [
+    {id:'v-pq2RQ7o1s', c:['dormir'], t:'Yoga Nidra de 10 minutos', g:'Anabel Otero', d:'11 min', n:'Acostada. Relaja todo el cuerpo. Ideal antes de dormir.'},
+    {id:'cnFVmvbztKQ', c:['dormir'], t:'Meditación corta para tu rutina de noche', g:'Mirelle Maya', d:'8 min', n:'Corta, para hacerla ya en la cama.'},
+    {id:'vFrHhwCOaW0', c:['dormir'], t:'Meditación para dormir profundamente', g:'Gabriela Litschi', d:'15 min', n:'De las más escuchadas en español para dormir.'},
+    {id:'q6Ae0fiCS0I', c:['dormir'], t:'Yoga Nidra para descanso profundo', g:'Anabel Otero', d:'22 min', n:'Para las noches en que te cuesta soltar el día.'},
+    {id:'_lOpSbsm9y4', c:['estres','antojo'], t:'5 minutos para calmar el sistema nervioso', g:'Anabel Otero', d:'6 min', n:'Una pausa entre juntas o cuando llega el antojo.'},
+    {id:'EGO5m_DBzF8', c:['estres'], t:'Respiración 4-7-8 para la ansiedad', g:'Gabriela Litschi', d:'7 min', n:'Te enseña una respiración que puedes usar en cualquier lado.'},
+    {id:'9-IOMXpv7Ys', c:['estres'], t:'Mindfulness de 10 minutos para el estrés', g:'Psicología en Serio · Guillermo Orozco', d:'10 min', n:'Guiada por un psicólogo mexicano.'},
+    {id:'pDigD65kLpE', c:['estres'], t:'Calmar la mente en momentos difíciles', g:'Anabel Otero', d:'11 min', n:'Para los días pesados de trabajo.'},
+    {id:'C-e-u3eQTPg', c:['antojo'], t:'Ansiedad por comer y antojo de dulce', g:'Meditación3', d:'26 min', n:'Habla justo del antojo de dulce. Buena para una noche tranquila.'},
+    {id:'xJa8VI39WWw', c:['cuerpo','antojo'], t:'Escaneo corporal de 10 minutos', g:'Pablo Gómez, psiquiatra', d:'10 min', n:'Te ayuda a notar si lo que sientes es hambre, cansancio o tensión.'},
+    {id:'3toPuPbDnuw', c:['cuerpo'], t:'Escaneo corporal para relajarte', g:'Gabriela Litschi', d:'15 min', n:'Para reconectar con tu cuerpo con cariño.'},
+    {id:'01d3OX_yduI', c:['compasion'], t:'Mini meditación de compasión', g:'Pablo Gómez, psiquiatra', d:'8 min', n:'Para cuando te regañas.'},
+    {id:'Z0thiEvI51A', c:['compasion'], t:'Meditación de autocompasión', g:'Meditación3', d:'16 min', n:'Más larga, para tratarte como a tu mejor amiga.'},
+    {id:'Bu0vbWII_jM', c:['manana'], t:'Paz y alegría para un nuevo día', g:'Anabel Otero', d:'13 min', n:'Para empezar la mañana en calma.'},
+    {id:'Xa2ar1Zwodw', c:['manana'], t:'Meditación de gratitud', g:'Gabriela Litschi', d:'10 min', n:'Diez minutos para empezar el día agradecida.'}
+  ];
+  var yt = function(id){ return 'https://www.youtube.com/watch?v=' + id; };
+  var MED = {}; MEDS.forEach(function(m){ MED[m.id] = m; });
+  var filtro = NOCHE ? 'dormir' : MOM === 'manana' ? 'manana' : 'todas';
+  function pintarMeds(){
+    var f = $('#medFiltro'); f.innerHTML = '';
+    [['todas','Todas']].concat(Object.keys(CAT).map(function(k){ return [k, CAT[k]]; })).forEach(function(x){
+      var b = el('button', 'chip', x[1]); b.type = 'button';
+      b.setAttribute('aria-pressed', String(filtro === x[0]));
+      b.addEventListener('click', function(){ filtro = x[0]; pintarMeds(); });
+      f.appendChild(b);
+    });
+    var box = $('#meds'); box.innerHTML = '';
+    MEDS.filter(function(m){ return filtro === 'todas' || m.c.indexOf(filtro) >= 0; }).forEach(function(m){
+      var a = el('a', 'med'); a.href = yt(m.id); a.target = '_blank'; a.rel = 'noopener';
+      a.setAttribute('aria-label', m.t + ', ' + m.d + ', con ' + m.g + '. Se abre en YouTube.');
+      var art = el('div', 'art c-' + m.c[0]);
+      art.innerHTML = '<span class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg></span>';
+      art.appendChild(el('span', 'dur', m.d));
+      a.appendChild(art);
+      a.appendChild(el('span', 'eyebrow', CAT[m.c[0]]));
+      a.appendChild(el('h3', null, m.t));
+      a.appendChild(el('span', 'guia', 'Con ' + m.g + ' · YouTube'));
+      a.appendChild(el('span', 'nota', m.n));
+      box.appendChild(a);
+    });
+  }
+  function ligaMed(id, txt){ var m = MED[id]; return '<a href="' + yt(id) + '" target="_blank" rel="noopener">' + (txt || m.t) + ' (' + m.d + ')</a>'; }
+
+  /* ---------- Check-in ---------- */
+  var ENER = [['pila','Con pila'],['normal','Normal'],['cansada','Cansada']];
+  var ANIMO = [['tranquila','Tranquila'],['estresada','Estresada'],['sensible','Triste o sensible']];
+  var CUERPO_SUG = {
+    pila: 'Aprovecha la energía: tu clase completa y deja lista proteína para 3 días.',
+    normal: 'Tu clase de siempre y 10 minutos caminando después de comer.',
+    cansada: 'Hoy toca clase suave o caminata. Esta noche, a la cama 30 minutos antes.'
+  };
+  var MENTE_SUG = {
+    tranquila: ['Xa2ar1Zwodw', 'Si te queda tiempo, una '],
+    estresada: ['_lOpSbsm9y4', 'A media mañana o en la tarde, haz '],
+    sensible: ['01d3OX_yduI', 'Sé suave contigo. Date una ']
+  };
+  function pintarCheck(){
+    var st = store.get('check:' + HOY, {});
+    [['#ciE', ENER, 'e'], ['#ciA', ANIMO, 'a']].forEach(function(cfg){
+      var box = $(cfg[0]); box.innerHTML = '';
+      cfg[1].forEach(function(x){
+        var b = el('button', 'chip', x[1]); b.type = 'button';
+        b.setAttribute('aria-pressed', String(st[cfg[2]] === x[0]));
+        b.addEventListener('click', function(){ var s = store.get('check:' + HOY, {}); s[cfg[2]] = x[0]; store.set('check:' + HOY, s); pintarCheck(); });
+        box.appendChild(b);
+      });
+    });
+    var sug = $('#sug'); sug.innerHTML = '';
+    var linea = function(ico, html){ var p = el('p'); p.innerHTML = svgUse(ico) + '<span>' + html + '</span>'; sug.appendChild(p); };
+    if (MOM === 'manana' && !store.get('dia:' + HOY, {}).mente) linea('i-mente', 'Empieza con tu Sudarshan Kriya, en ayunas.');
+    if (!st.e && !st.a){ linea('i-mente', 'Elige cómo estás y te digo qué te conviene hoy.'); }
+    if (st.e) linea('i-cuerpo', CUERPO_SUG[st.e]);
+    if (st.a){ var m = MENTE_SUG[st.a]; linea('i-mente', m[1] + ligaMed(m[0], MED[m[0]].t.toLowerCase()) + '.'); }
+    if (st.a === 'sensible') linea('i-corazon', 'Y escríbele o llama a alguien que quieres.');
+    linea('i-luna', (NOCHE ? 'Esta noche' : 'En la noche') + ', antes de dormir: ' + ligaMed('v-pq2RQ7o1s') + '.');
+  }
+
+  /* ---------- Afirmaciones ---------- */
+  var AF = [
+    {cat:'Calma ante el estrés', items:['Puedo sentir estrés sin resolverlo con comida.','Una respiración larga me devuelve el control.','El estrés pasa, y yo decido qué hago mientras pasa.','Me doy un minuto de pausa antes de decidir.','Mi trabajo importa, y mi calma también.']},
+    {cat:'Mi cuerpo', items:['Trato a mi cuerpo con paciencia y cariño.','Le doy a mi cuerpo agua, proteína, movimiento y descanso porque lo cuido.','Mis músculos son mi fuerza en esta etapa.','Escucho a mi cuerpo con curiosidad y sin juicio.','Como sentada, despacio y con atención.']},
+    {cat:'Para dejar de regañarme', items:['Una comida no define mi día ni mi semana.','Me hablo como le hablaría a mi mejor amiga.','Si me salgo del plan, regreso en la siguiente comida.','Merezco cuidado, también en los días difíciles.','Avanzo aunque no sea perfecta.']},
+    {cat:'Quién estoy eligiendo ser', items:['Soy una mujer que cuida su energía.','Tengo formas de calmarme que no son comida.','Cada día practico, y cada práctica cuenta.','Elijo lo que me hace sentir bien mañana, no solo ahorita.','Mi bienestar es mente, cuerpo y alma juntos.']},
+    {cat:'Para la noche', items:['Mi día terminó, y mi cocina también.','Cuando estoy cansada, lo que necesito es dormir.','Dormir bien es parte de mi plan.','Hoy hice lo suficiente.','Suelto el día y descanso.']}
+  ];
+  var TODAS = [];
+  AF.forEach(function(g){ TODAS = TODAS.concat(g.items); });
+  var semilla = function(s){ var h = 7; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; };
+  var NOCHE_AF = AF[AF.length - 1].items;
+  var afIdx = NOCHE ? TODAS.indexOf(NOCHE_AF[semilla(HOY) % NOCHE_AF.length]) : semilla(HOY) % TODAS.length;
+  $('#afLbl').textContent = NOCHE ? 'Afirmación de la noche' : 'Afirmación de hoy';
+  var favs = function(){ return store.get('favs', []); };
+  function toggleFav(t){ var f = favs(); f = f.indexOf(t) >= 0 ? f.filter(function(x){ return x !== t; }) : f.concat([t]); store.set('favs', f); pintarDia(); pintarAf(); }
+  function pintarDia(){
+    var t = TODAS[afIdx]; $('#afDia').textContent = t;
+    var on = favs().indexOf(t) >= 0, b = $('#afFav');
+    b.setAttribute('aria-pressed', String(on)); b.textContent = on ? 'Guardada' : 'Guardar';
+  }
+  function pintarAf(){
+    var box = $('#afGrupos'); box.innerHTML = '';
+    var f = favs();
+    ((f.length ? [{cat:'Mis favoritas', items:f}] : []).concat(AF)).forEach(function(g){
+      var s = el('section', 'afgrupo'); s.appendChild(el('h3', null, g.cat));
+      var ul = el('ul', 'aflist');
+      g.items.forEach(function(t){
+        var li = el('li'); li.appendChild(el('p', null, t));
+        var b = el('button', 'fav'); b.type = 'button'; b.innerHTML = svgUse('i-corazon');
+        var on = f.indexOf(t) >= 0;
+        b.setAttribute('aria-pressed', String(on));
+        b.setAttribute('aria-label', (on ? 'Quitar de favoritas: ' : 'Guardar en favoritas: ') + t);
+        b.addEventListener('click', function(){ toggleFav(t); });
+        li.appendChild(b); ul.appendChild(li);
+      });
+      s.appendChild(ul); box.appendChild(s);
+    });
+  }
+  $('#afOtra').addEventListener('click', function(){ afIdx = (afIdx + 1 + Math.floor(Math.random() * (TODAS.length - 1))) % TODAS.length; pintarDia(); });
+  $('#afFav').addEventListener('click', function(){ toggleFav(TODAS[afIdx]); });
+
+  /* ---------- Agua ---------- */
+  var META_AGUA = 10;
+  var GOTA = '<svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 2.5c4 5.4 7.5 9.7 7.5 13.6a7.5 7.5 0 0 1-15 0c0-3.9 3.5-8.2 7.5-13.6z"/></svg>';
+  function pintarAgua(){
+    var n = store.get('agua:' + HOY, 0);
+    var box = $('#gotas'); box.innerHTML = '';
+    for (var i = 1; i <= META_AGUA; i++){
+      (function(i){
+        var b = el('button', 'gota'); b.type = 'button'; b.innerHTML = GOTA;
+        b.setAttribute('aria-pressed', String(i <= n));
+        b.setAttribute('aria-label', 'Vaso ' + i);
+        b.addEventListener('click', function(){ var v = store.get('agua:' + HOY, 0); store.set('agua:' + HOY, v === i ? i - 1 : i); pintarAgua(); });
+        box.appendChild(b);
+      })(i);
+    }
+    $('#aguaN').textContent = n + ' de ' + META_AGUA + ' vasos';
+    $('#aguaTip').textContent = n >= META_AGUA ? 'Llegaste a tu meta. Desde 1 o 2 horas antes de dormir, solo sorbos.'
+      : NOCHE ? 'Ya es de noche: solo sorbos, para no despertarte a ir al baño. Mañana empieza con un vaso al despertar.'
+      : 'Cada gota es un vaso de 250 ml. La meta son 10 vasos, unos 2.5 litros.';
+  }
+
+  /* ---------- Descanso ---------- */
+  function horasDescanso(){
+    var w = aMin(store.get('despierto', '06:30'));
+    var cama = w - 435, compu = cama - 60;
+    return {cama: cama, compu: compu};
+  }
+  function pintarDescanso(){
+    $('#despierto').value = store.get('despierto', '06:30');
+    var h = horasDescanso();
+    $('#hDormir').textContent = horaBonita(h.cama);
+    $('#hCompu').textContent = 'Cierra la compu a las ' + horaBonita(h.compu) + ', una hora antes.';
+  }
+  $('#despierto').addEventListener('change', function(){ store.set('despierto', this.value || '06:30'); pintarDescanso(); pintarHab(); pintarRitual(); });
+
+  /* ---------- Lista del dia ---------- */
+  function itemsHoy(){
+    var h = horasDescanso();
+    return [
+      ['luz','descanso','Descanso','10 minutos de luz natural en la mañana'],
+      ['mente','mente','Mente','Mi Sudarshan Kriya de la mañana'],
+      ['mov','cuerpo','Cuerpo','Mi clase o una caminata de 10 minutos'],
+      ['prot','comida','Comida','Proteína en cada comida y colación a las 5'],
+      ['cocina','comida','Noche','Postre planeado y cocina cerrada'],
+      ['compu','descanso','Descanso','Compu cerrada a las ' + horaBonita(h.compu)],
+      ['nochemed','descanso','Noche','Meditación o Yoga Nidra antes de dormir'],
+      ['gozo','conexion','Conexión','Algo que disfruté que no fue comida']
+    ];
+  }
+  function progreso(){
+    var n = $$('#hab input:checked').length, tot = $$('#hab input').length;
+    $('#habN').textContent = n + ' de ' + tot;
+    $('#habBar').style.width = (tot ? n / tot * 100 : 0) + '%';
+    var kh = $('#kriyaHoy'); if (kh) kh.checked = !!store.get('dia:' + HOY, {}).mente;
+  }
+  $('#kriyaHoy').addEventListener('change', function(){
+    var s = store.get('dia:' + HOY, {}); s.mente = this.checked; store.set('dia:' + HOY, s);
+    pintarHab(); pintarCheck();
+  });
+  function pintarHab(){
+    var st = store.get('dia:' + HOY, {});
+    var ul = $('#hab'); ul.innerHTML = '';
+    itemsHoy().forEach(function(it){
+      var li = el('li'), lb = el('label'), cb = el('input');
+      cb.type = 'checkbox'; cb.id = 'hab-' + it[0]; cb.checked = !!st[it[0]];
+      cb.addEventListener('change', function(){ var s = store.get('dia:' + HOY, {}); s[it[0]] = cb.checked; store.set('dia:' + HOY, s); progreso(); });
+      lb.htmlFor = cb.id; lb.appendChild(cb); lb.appendChild(el('span', 'txt', it[3])); lb.appendChild(el('span', 'pilar p-' + it[1], it[2]));
+      li.appendChild(lb); ul.appendChild(li);
+    });
+    progreso();
+  }
+  var sv = store.get('sueno:' + HOY, null);
+  if (sv != null) $('#sueno').value = sv;
+  $('#sueno').addEventListener('change', function(){ var v = parseFloat(this.value); store.set('sueno:' + HOY, isNaN(v) ? null : v); });
+
+  /* ---------- Mi dia (ritual) ---------- */
+  function pintarRitual(){
+    var h = horasDescanso();
+    var R = [
+      ['manana','i-hoy','Al despertar',['Un vaso de agua.','10 minutos de luz natural.','Tu Sudarshan Kriya, en ayunas.','Tu afirmación del día.']],
+      ['manana','i-mente','Mañana',['Desayuno con proteína, después de tu Kriya.','Tu clase.']],
+      ['mediodia','i-plato','Mediodía',['Un vaso de agua y comida sin pantalla.','10 minutos caminando después de comer.']],
+      ['tarde','i-gota','5 o 6 de la tarde',['Colación con proteína y un vaso de agua.','Una pausa: ' + ligaMed('_lOpSbsm9y4') + '.']],
+      ['noche','i-corazon','Noche',['Cena con proteína, 2 a 3 horas antes de dormir.','Postre planeado y cocina cerrada.','Compu cerrada a las ' + horaBonita(h.compu) + '.']],
+      ['noche','i-luna','Antes de dormir · ' + horaBonita(h.cama),['Luz baja, sin pantalla, solo sorbos de agua.','Estírate 5 minutos.',ligaMed('v-pq2RQ7o1s') + ' y tres cosas buenas de hoy en tu diario.']]
+    ];
+    var ol = $('#ritual'); ol.innerHTML = '';
+    var marcado = false;
+    R.forEach(function(r){
+      var li = el('li');
+      if (!marcado && r[0] === MOM){ li.className = 'ahora'; marcado = true; }
+      var dot = el('span', 'dot'); dot.innerHTML = svgUse(r[1]); li.appendChild(dot);
+      var c = el('div', 'cuerpo');
+      c.appendChild(el('span', 'hora', r[2] + (li.className === 'ahora' ? ' · ahora' : '')));
+      var ul = el('ul'); r[3].forEach(function(t){ var x = el('li'); x.innerHTML = t; ul.appendChild(x); }); c.appendChild(ul);
+      li.appendChild(c); ol.appendChild(li);
+    });
+  }
+
+  /* ---------- Menu ---------- */
+  var DIAS_L = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+  var DIAS_C = ['L','M','Mi','J','V','S','D'];
+  var MENU = [
+    {d:['2 huevos a la mexicana con ½ taza de frijoles, 30 g de queso fresco y 1 tortilla',26], c:['Pierna y muslo de pollo sin piel en caldillo de jitomate con calabacita y ½ taza de arroz',28], k:['2 huevos cocidos con limón',12], n:['2 tostadas horneadas de atún con jitomate, pepino y lechuga',25], p:'Gelatina de leche light hecha en casa'},
+    {d:['Avena cocida en leche con canela y plátano, y 2 huevos cocidos',25], c:['Lentejas guisadas con verduras (1½ tazas) y 1 huevo duro picado',30], k:['1 yogur natural con 1 cucharada de cacahuates',11], n:['2 tostadas de tinga de pollo con lechuga',25], p:'Manzana asada con canela'},
+    {d:['Molletes: 1 bolillo sin migajón con frijoles, 40 g de queso fresco y pico de gallo, y 1 huevo',26], c:['Picadillo de soya y res con papa, zanahoria y chícharo, con 2 tortillas',26], k:['½ lata de atún con pepino y limón',12], n:['Huevos con nopales (2 huevos), ½ taza de frijoles y queso fresco',24], p:'Helado de plátano: 1 plátano congelado licuado con un poco de cacao'},
+    {d:['Chilaquiles horneados (totopos de las tortillas de ayer) con pollo deshebrado y queso fresco',28], c:['Mojarra o tilapia a la mexicana con ensalada y ½ taza de arroz',30], k:['½ taza de requesón con papaya',12], n:['2 tostadas de sardina en tomate con lechuga y cebolla',22], p:'Té de canela con 1 galleta María'},
+    {d:['Huevos revueltos con espinaca (2 huevos), ½ taza de frijoles y queso fresco',24], c:['3 tacos de pollo deshebrado con col, zanahoria y salsa',28], k:['1 vaso de leche con canela y 15 cacahuates',12], n:['2 quesadillas de queso fresco y pollo deshebrado, con ensalada',25], p:'Papaya o guayaba con limón'},
+    {d:['Hot cakes de avena y plátano hechos con 2 huevos, y 1 vaso de leche',24], c:['Albóndigas de res y soya en caldillo con verduras y ½ taza de arroz',28], k:['2 huevos cocidos',12], n:['Sopa de lentejas con verduras y 30 g de queso fresco',23], p:'Gelatina de leche light hecha en casa'},
+    {d:['1 taza de yogur natural con avena, plátano y canela, y 2 huevos cocidos',24], c:['Pollo asado en casa (pierna y muslo) con nopales y frijoles de olla',30], k:['Requesón con jícama y chile',12], n:['2 tostadas de tinga con el pollo que sobró',25], p:'Guayaba o manzana con canela'}
+  ];
+  var hoyIdx = (ahora.getDay() + 6) % 7, diaSel = hoyIdx;
+  function pintarComidas(ul, m){
+    ul.innerHTML = '';
+    [['Desayuno', m.d], ['Comida', m.c], ['Colación 5–6 pm', m.k], ['Cena', m.n], ['Postre', [m.p, null]]].forEach(function(r){
+      var li = el('li');
+      li.appendChild(el('span', 't', r[0]));
+      li.appendChild(el('span', null, r[1][0]));
+      li.appendChild(el('span', 'g', r[1][1] ? '≈ ' + r[1][1] + ' g' : ''));
+      ul.appendChild(li);
+    });
+  }
+  function pintarMenu(){
+    var box = $('#dias'); box.innerHTML = '';
+    DIAS_C.forEach(function(c, i){
+      var b = el('button', 'chip', c); b.type = 'button';
+      b.setAttribute('aria-pressed', String(i === diaSel));
+      b.setAttribute('aria-label', DIAS_L[i] + (i === hoyIdx ? ', hoy' : ''));
+      b.addEventListener('click', function(){ diaSel = i; pintarMenu(); });
+      box.appendChild(b);
+    });
+    pintarComidas($('#diaMenu'), MENU[diaSel]);
+    $('#diaNota').textContent = DIAS_L[diaSel] + (diaSel === hoyIdx ? ' (hoy)' : '') + (diaSel === 6 ? '. Hoy cocina una olla de frijoles, pollo deshebrado y huevos cocidos para 3 días.' : '.');
+  }
+  pintarComidas($('#hoyMenu'), MENU[hoyIdx]);
+  $('#verMenu').addEventListener('click', function(){ irA('cuerpo'); setTimeout(function(){ var s = $('#s-comida'); if (s) s.scrollIntoView({block:'start'}); }, 30); });
+
+  /* ---------- Respiracion (4 s tomar aire, 6 s soltarlo) ---------- */
+  function Respira(circ, txt, num, btn, vueltas, fin){
+    var tmo = null;
+    function parar(){ clearTimeout(tmo); tmo = null; circ.style.transitionDuration = '0ms'; circ.style.transform = 'scale(.6)'; }
+    function empezar(){
+      parar(); void circ.offsetWidth;
+      var seq = []; for (var r = 1; r <= vueltas; r++) seq.push(['Toma aire por la nariz', 4000, 1, r], ['Suéltalo despacito por la boca', 6000, .6, r]);
+      var i = 0;
+      (function fase(){
+        if (i >= seq.length){ txt.textContent = fin; num.textContent = ''; btn.textContent = 'Otra vez'; tmo = null; return; }
+        var f = seq[i++];
+        txt.textContent = f[0]; num.textContent = 'Respiración ' + f[3] + ' de ' + vueltas;
+        circ.style.transitionDuration = f[1] + 'ms'; circ.style.transform = 'scale(' + f[2] + ')';
+        tmo = setTimeout(fase, f[1]);
+      })();
+    }
+    btn.addEventListener('click', empezar);
+    return {parar: parar};
+  }
+  var resp1 = Respira($('#circ'), $('#btxt'), $('#bn'), $('#bStart'), 3, 'Listo. Nota cómo está tu cuerpo ahora.');
+  Respira($('#circ2'), $('#btxt2'), $('#bn2'), $('#bStart2'), 6, 'Un minuto de calma. Bien hecho.');
+
+  /* ---------- Antojo: 5 pasos ---------- */
+  var EMO = {
+    cansancio:{n:'Cansancio o sueño', s:['Si ya cenaste y es de noche, lo que tienes es sueño. Lávate los dientes y vete a la cama.','Un té de manzanilla calientito.','Pon tu Yoga Nidra de 10 minutos.']},
+    estres:{n:'Estrés', s:['Otras 3 respiraciones lentas.','Camina 5 minutos, aunque sea dentro de la casa.','Agua fría en las muñecas y la nuca.']},
+    saturacion:{n:'Saturación', s:['Cambia de tarea 5 minutos.','Pon una canción que te guste.','Escribe las 3 cosas que te pesan y elige solo una.']},
+    aburrimiento:{n:'Aburrimiento', s:['Sal a tomar aire 5 minutos.','Ordena algo pequeño.','Mándale un mensaje a alguien que quieres.']},
+    enojo:{n:'Enojo', s:['Escribe 2 minutos sin filtro qué te enojó.','Aprieta los puños 5 segundos y suelta. Repite 3 veces.','Camina rápido 5 minutos.']},
+    tristeza:{n:'Tristeza o soledad', s:['Llama o escríbele a alguien.','Algo calientito: un té, una cobija.','Escribe una cosa que salió bien hoy.']},
+    premio:{n:'Quiero un premio', s:['Si todavía no comes tu postre planeado, cómelo ahora, sentada y despacio.','Un premio que no sea comida: una crema, un capítulo, un baño largo.']},
+    ciclo:{n:'Semana de más hambre', s:['Es tu ciclo, aunque ya no tengas regla. Esos días el hambre sí sube.','Come una colación extra con proteína, como 2 huevos cocidos o un yogur natural.','Algo con magnesio: cacahuates, pepitas o frijoles.']}
+  };
+  var estado = {emo:null};
+  function pintarEmos(){
+    var box = $('#emos'); box.innerHTML = '';
+    Object.keys(EMO).forEach(function(k){
+      var b = el('button', 'chip', EMO[k].n); b.type = 'button';
+      b.setAttribute('aria-pressed', String(estado.emo === k));
+      b.addEventListener('click', function(){ estado.emo = k; pintarEmos(); });
+      box.appendChild(b);
+    });
+    var ul = $('#sust'); ul.innerHTML = '';
+    if (estado.emo) EMO[estado.emo].s.forEach(function(t){ ul.appendChild(el('li', null, t)); });
+  }
+  var panel = $('#pausa'), pasosLi = $$('#pausa .pasos li'), pasosDiv = $$('#pausa .paso'), actual = 0;
+  function ir(n){
+    actual = n;
+    pasosDiv.forEach(function(d, i){ d.hidden = (i !== n); });
+    pasosLi.forEach(function(li, i){ li.classList.toggle('on', i === n); li.classList.toggle('hecho', i < n); if (i === n) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current'); });
+    $('#pAtras').disabled = (n === 0);
+    $('#pSig').hidden = (n === pasosDiv.length - 1);
+    if (n === 1) evaluar();
+  }
+  function abrir(){
+    panel.hidden = false; $('#abrirPausa').setAttribute('aria-expanded', 'true');
+    estado = {emo:null};
+    ['q1','q2','q3'].forEach(function(id){ $('#' + id).checked = false; });
+    pintarEmos(); resetTimer(); $('#tMsg').textContent = '';
+    $('#fin').hidden = true; $('#decide').hidden = false;
+    resp1.parar(); $('#btxt').textContent = 'Cuando estés lista, empieza.'; $('#bn').textContent = ''; $('#bStart').textContent = 'Empezar';
+    ir(0);
+    panel.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'start'});
+  }
+  function cerrar(){ resp1.parar(); pausarTimer(); panel.hidden = true; $('#abrirPausa').setAttribute('aria-expanded', 'false'); $('#abrirPausa').focus(); }
+  $('#abrirPausa').addEventListener('click', function(){ if (panel.hidden) abrir(); else cerrar(); });
+  $('#pSig').addEventListener('click', function(){ ir(Math.min(actual + 1, pasosDiv.length - 1)); });
+  $('#pAtras').addEventListener('click', function(){ ir(Math.max(actual - 1, 0)); });
+  $('#pCerrar').addEventListener('click', cerrar);
+  function evaluar(){
+    var real = $('#q1').checked, golpe = $('#q2').checked, reciente = $('#q3').checked, m;
+    if (!real) m = 'Es antojo, no hambre. Tu estómago no lo está pidiendo. Pasa al paso 3.';
+    else if (!reciente && !golpe) m = 'Es hambre de verdad. Come algo con proteína, como un huevo cocido o un yogur natural, sentada y despacio.';
+    else m = 'Puede ser hambre, pero también hay antojo. Si comes, que sea algo con proteína y despacio. Si no, pasa al paso 3.';
+    $('#hRes').textContent = m;
+  }
+  ['q1','q2','q3'].forEach(function(id){ $('#' + id).addEventListener('change', evaluar); });
+  var tLeft = 600, tInt = null;
+  var fmt = function(s){ return pad(Math.floor(s / 60)) + ':' + pad(s % 60); };
+  function pintarT(){ $('#tmr').textContent = fmt(tLeft); }
+  function pausarTimer(){ clearInterval(tInt); tInt = null; $('#tGo').textContent = (tLeft > 0 && tLeft < 600) ? 'Seguir' : 'Empezar 10 minutos'; }
+  function resetTimer(){ clearInterval(tInt); tInt = null; tLeft = 600; pintarT(); $('#tGo').textContent = 'Empezar 10 minutos'; }
+  $('#tGo').addEventListener('click', function(){
+    if (tInt){ pausarTimer(); return; }
+    if (tLeft <= 0){ tLeft = 600; pintarT(); }
+    $('#tMsg').textContent = 'Si quieres, mientras esperas pasa al paso 4 y haz otra cosa.';
+    $('#tGo').textContent = 'Pausar';
+    tInt = setInterval(function(){
+      tLeft--; pintarT();
+      if (tLeft <= 0){ clearInterval(tInt); tInt = null; $('#tGo').textContent = 'Empezar otra vez'; $('#tMsg').textContent = 'Ya pasaron los 10 minutos. ¿Cómo siguen las ganas?'; }
+    }, 1000);
+  });
+  $('#tReset').addEventListener('click', function(){ resetTimer(); $('#tMsg').textContent = ''; });
+  var RES = {pasar:'Se me pasó', consciente:'Comí despacio', auto:'Sin pensar'};
+  var MSG = {
+    pasar: 'Se te pasó. Cada vez que pasa, tu cerebro aprende que el estrés y el cansancio se calman sin comida.',
+    consciente: 'Sirve una porción en plato y siéntate. Come despacio y para cuando estés satisfecha. Después, cocina cerrada.',
+    auto: 'Ya pasó, y no define tu día. Háblate como a tu mejor amiga y regresa al plan en tu siguiente comida.'
+  };
+  var leer = function(){ return store.get('log', []); };
+  $$('#decide button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var L = leer();
+      var e = {t: new Date().toISOString(), emo: estado.emo || '', hambre: $('#q1').checked ? 'si' : 'no', res: b.dataset.r};
+      L.push(e); store.set('log', L);
+      var fin = $('#fin'); fin.innerHTML = '';
+      fin.appendChild(el('p', null, MSG[e.res]));
+      var r = el('div', 'row');
+      var ok = el('button', 'btn primary', 'Listo'); ok.type = 'button'; ok.addEventListener('click', cerrar);
+      var u = el('button', 'btn', 'Deshacer'); u.type = 'button';
+      u.addEventListener('click', function(){ var L2 = leer(); if (L2.length && L2[L2.length - 1].t === e.t){ L2.pop(); store.set('log', L2); } fin.hidden = true; $('#decide').hidden = false; });
+      r.appendChild(ok); r.appendChild(u); fin.appendChild(r);
+      fin.hidden = false; $('#decide').hidden = true;
+    });
+  });
+
+  /* ---------- Diario ---------- */
+  (function(){
+    var d = store.get('diario:' + HOY, {});
+    var tmo = null;
+    [['d1','a'],['d2','b'],['d3','c']].forEach(function(x){
+      var t = $('#' + x[0]); t.value = d[x[1]] || '';
+      t.addEventListener('input', function(){
+        clearTimeout(tmo);
+        tmo = setTimeout(function(){
+          var s = store.get('diario:' + HOY, {}); s[x[1]] = t.value; store.set('diario:' + HOY, s);
+          $('#dMsg').textContent = puedeGuardar ? 'Guardado.' : 'Este navegador no deja guardar. Copia lo que escribas.';
+        }, 500);
+      });
+    });
+  })();
+
+  /* ---------- Avance ---------- */
+  function inicioSemana(d){ var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; }
+  var medidas = function(){ return store.get('medidas', []); };
+  function serie(M, key){ return M.filter(function(m){ return m[key] != null; }); }
+  function kpi(lbl, big, sub, cls){ var d = el('div', 'kpi'); d.appendChild(el('span', 'l', lbl)); d.appendChild(el('b', cls || null, big)); d.appendChild(el('span', 's', sub)); return d; }
+  function kpiMedida(M, key, u, lbl){
+    var s = serie(M, key);
+    if (!s.length) return kpi(lbl, '—', 'Anota tu primera medida abajo.');
+    var ini = s[0][key], ult = s[s.length - 1][key];
+    if (s.length === 1) return kpi(lbl, uno(ini) + ' ' + u, 'Tu punto de partida, del ' + fechaCorta(deKey(s[0].f)) + '.');
+    var dif = ult - ini;
+    return kpi(lbl, (dif < 0 ? '−' : dif > 0 ? '+' : '') + uno(Math.abs(dif)) + ' ' + u, 'De ' + uno(ini) + ' a ' + uno(ult) + ' ' + u + '.', dif < 0 ? 'baja' : dif > 0 ? 'sube' : null);
+  }
+  function pintarAvance(){
+    var M = medidas();
+    var k = $('#kpis'); k.innerHTML = '';
+    k.appendChild(kpiMedida(M, 'p', 'kg', 'Peso'));
+    k.appendChild(kpiMedida(M, 'c', 'cm', 'Cintura'));
+    var hs = [], ag = [], cer = 0, med = 0;
+    for (var i = 0; i < 7; i++){
+      var dk = dkey(new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate() - i));
+      var h = store.get('sueno:' + dk, null); if (typeof h === 'number') hs.push(h);
+      var a = store.get('agua:' + dk, 0); if (a > 0) ag.push(a);
+      var st = store.get('dia:' + dk, {}); if (st.cocina) cer++; if (st.mente) med++;
+    }
+    var prom = function(xs){ return xs.length ? xs.reduce(function(x, y){ return x + y; }, 0) / xs.length : null; };
+    var ps = prom(hs), pa = prom(ag);
+    k.appendChild(kpi('Sueño', ps == null ? '—' : uno(ps) + ' h', ps == null ? 'Anota cada mañana cuántas horas dormiste.' : 'Promedio de ' + hs.length + (hs.length === 1 ? ' noche' : ' noches') + '. La meta es 7.', ps != null && ps >= 7 ? 'baja' : null));
+    k.appendChild(kpi('Agua', pa == null ? '—' : uno(pa) + ' vasos', pa == null ? 'Toca las gotas en Hoy cada vez que tomes un vaso.' : 'Promedio al día. La meta es 10.', pa != null && pa >= META_AGUA ? 'baja' : null));
+    k.appendChild(kpi('Cocina cerrada', cer + ' de 7', 'Noches de los últimos 7 días.', cer >= 5 ? 'baja' : null));
+    k.appendChild(kpi('Sudarshan Kriya', med + ' de 7', 'Mañanas con tu práctica, de los últimos 7 días.', med >= 6 ? 'baja' : null));
+
+    var tbl = $('#mTabla'); tbl.innerHTML = '';
+    if (!M.length) tbl.appendChild(el('p', 'empty', 'Todavía no hay medidas. La primera es tu punto de partida.'));
+    else {
+      var w = el('div', 'tw'), t = el('table'), th = el('thead'), tr = el('tr');
+      ['Fecha','Peso','Cintura','Cambio de peso',''].forEach(function(x){ var c = el('th', null, x); c.scope = 'col'; tr.appendChild(c); });
+      th.appendChild(tr); t.appendChild(th);
+      var tb = el('tbody'), p0 = serie(M, 'p'); p0 = p0.length ? p0[0].p : null;
+      M.slice().reverse().forEach(function(m){
+        var r = el('tr');
+        r.appendChild(el('td', null, fechaCorta(deKey(m.f))));
+        r.appendChild(el('td', null, m.p != null ? uno(m.p) + ' kg' : '—'));
+        r.appendChild(el('td', null, m.c != null ? uno(m.c) + ' cm' : '—'));
+        var dif = (m.p != null && p0 != null) ? m.p - p0 : null;
+        r.appendChild(el('td', null, dif == null ? '—' : (dif < 0 ? '−' : dif > 0 ? '+' : '') + uno(Math.abs(dif)) + ' kg'));
+        var c = el('td'), b = el('button', 'btn small', 'Quitar'); b.type = 'button';
+        var listo = false, tmo = null;
+        b.addEventListener('click', function(){
+          if (!listo){ listo = true; b.textContent = '¿Seguro?'; tmo = setTimeout(function(){ listo = false; b.textContent = 'Quitar'; }, 3000); return; }
+          clearTimeout(tmo); store.set('medidas', medidas().filter(function(x){ return x.f !== m.f; })); pintarAvance();
+        });
+        c.appendChild(b); r.appendChild(c); tb.appendChild(r);
+      });
+      t.appendChild(tb); w.appendChild(t); tbl.appendChild(w);
+    }
+    var L = leer(), a0 = inicioSemana(ahora), ul = $('#reg'); ul.innerHTML = '';
+    var sem = L.filter(function(e){ return new Date(e.t) >= a0; }).reverse();
+    if (!sem.length){ ul.appendChild(el('li', 'empty', 'Esta semana no has anotado antojos. Cuando llegue uno, toca «Tengo un antojo» en Hoy.')); return; }
+    sem.forEach(function(e){
+      var t = new Date(e.t), li = el('li');
+      li.appendChild(el('span', null, DIAS[t.getDay()].slice(0, 3) + ' ' + pad(t.getHours()) + ':' + pad(t.getMinutes()) + (e.emo && EMO[e.emo] ? ' · ' + EMO[e.emo].n : '')));
+      li.appendChild(el('span', 'pill ' + e.res, RES[e.res] || ''));
+      ul.appendChild(li);
+    });
+  }
+  $('#mFecha').value = HOY;
+  $('#mForm').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var f = $('#mFecha').value || HOY, p = parseFloat($('#mPeso').value), c = parseFloat($('#mCint').value);
+    if (isNaN(p) && isNaN(c)){ $('#mMsg').textContent = 'Escribe tu peso, tu cintura o los dos.'; return; }
+    var M = medidas().filter(function(m){ return m.f !== f; });
+    M.push({f: f, p: isNaN(p) ? null : p, c: isNaN(c) ? null : c});
+    M.sort(function(x, y){ return x.f < y.f ? -1 : x.f > y.f ? 1 : 0; });
+    store.set('medidas', M);
+    $('#mMsg').textContent = 'Guardada la medida del ' + fechaLarga(deKey(f)) + '.';
+    $('#mPeso').value = ''; $('#mCint').value = '';
+    pintarAvance();
+  });
+
+  /* ---------- El mes ---------- */
+  var SEM = [
+    {t:'La noche', i:['El primer día, pésate y mide tu cintura en Avance.','Cena, postre planeado y cocina cerrada.','Yoga Nidra o meditación de noche, al menos 3 noches.','Si llega el antojo, toca «Tengo un antojo».']},
+    {t:'Descanso', i:['Hora fija para levantarte y para acostarte.','10 minutos de luz natural al despertar.','Sin pantalla media hora antes de dormir.','Domingo: pésate y mide tu cintura.']},
+    {t:'Cuerpo', i:['Proteína en cada comida y colación de la tarde.','Tus 10 vasos de agua.','10 minutos caminando después de comer.','Domingo: cocina para 3 días, y mídete.']},
+    {t:'Mente y gozo', i:['Tu Sudarshan Kriya cada mañana y una meditación de noche.','Tres cosas buenas en tu diario cada noche.','Algo que disfrutes cada día que no sea comida.','Última medida del mes y tu InBody.']}
+  ];
+  function semanaActual(){
+    var ini = store.get('inicio', null); if (!ini) return 0;
+    var dif = Math.round((deKey(HOY) - deKey(ini)) / 864e5);
+    if (isNaN(dif) || dif < 0) return 0;
+    return Math.min(5, Math.floor(dif / 7) + 1);
+  }
+  function pintarSemanas(){
+    var ini = store.get('inicio', null), cur = semanaActual();
+    $('#inicio').value = ini || '';
+    var box = $('#semanas'); box.innerHTML = '';
+    SEM.forEach(function(s, i){
+      var art = el('article', 'sem' + (cur === i + 1 ? ' actual' : '')), h = el('header');
+      h.appendChild(el('span', 'n', 'Semana ' + (i + 1)));
+      if (cur === i + 1) h.appendChild(el('span', 'tag', 'Esta semana'));
+      else if (cur > i + 1) h.appendChild(el('span', 'tag hecha', 'Hecha'));
+      art.appendChild(h); art.appendChild(el('h3', null, s.t));
+      var ul = el('ul'); s.i.forEach(function(t){ ul.appendChild(el('li', null, t)); }); art.appendChild(ul);
+      box.appendChild(art);
+    });
+    var iniTxt = ini ? fechaLarga(deKey(ini)) : '';
+    $('#semEstado').textContent = !ini ? 'Elige el día en que empezaste, o toca «Empecé hoy».'
+      : cur === 0 ? ('Empiezas el ' + iniTxt + '.')
+      : cur === 5 ? 'Terminaste tu mes. Revisa tu avance y decide qué sigue.'
+      : ('Empezaste el ' + iniTxt + '. Vas en la semana ' + cur + ' de 4.');
+    var f = $('#semline'); f.innerHTML = '';
+    var txt = el('div'), btns = el('div', 'row');
+    if (cur >= 1 && cur <= 4){
+      txt.appendChild(el('p', 'eyebrow', 'Semana ' + cur + ' de 4'));
+      txt.appendChild(el('p', null, SEM[cur - 1].t));
+      var v = el('button', 'btn small', 'Ver mi plan'); v.type = 'button'; v.addEventListener('click', function(){ irA('plan'); }); btns.appendChild(v);
+    } else if (cur === 5){
+      txt.appendChild(el('p', 'eyebrow', 'Terminaste tu mes'));
+      txt.appendChild(el('p', null, 'Revisa tu avance y decide qué sigue.'));
+      var v2 = el('button', 'btn small', 'Ver avance'); v2.type = 'button'; v2.addEventListener('click', function(){ irA('avance'); }); btns.appendChild(v2);
+    } else if (ini){
+      txt.appendChild(el('p', 'eyebrow', 'Tu mes')); txt.appendChild(el('p', null, 'Empiezas el ' + iniTxt + '.'));
+    } else {
+      txt.appendChild(el('p', 'eyebrow', 'Tu mes')); txt.appendChild(el('p', null, '¿Empiezas hoy?'));
+      var hoyB = el('button', 'btn small primary', 'Empecé hoy'); hoyB.type = 'button';
+      hoyB.addEventListener('click', function(){ store.set('inicio', HOY); pintarSemanas(); }); btns.appendChild(hoyB);
+    }
+    f.appendChild(txt); f.appendChild(btns);
+  }
+  $('#inicio').addEventListener('change', function(){ store.set('inicio', this.value || null); pintarSemanas(); });
+  $('#inicioHoy').addEventListener('click', function(){ store.set('inicio', HOY); pintarSemanas(); });
+
+  /* ---------- Copiar enlace para los avisos ---------- */
+  $('#copiarLiga').addEventListener('click', function(){
+    var b = this, span = $('#ligaApp');
+    var seleccionar = function(){
+      try { var r = document.createRange(); r.selectNodeContents(span); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch(e){}
+      b.textContent = 'Seleccionado: cópialo';
+    };
+    try { navigator.clipboard.writeText(span.textContent).then(function(){ b.textContent = 'Copiado'; }, seleccionar); } catch(e){ seleccionar(); }
+  });
+
+  /* ---------- Arranque ---------- */
+  if (!puedeGuardar) $('#aviso').hidden = false;
+  pintarCheck(); pintarDia(); pintarAf(); pintarAgua(); pintarDescanso(); pintarHab(); pintarRitual(); pintarMenu(); pintarMeds(); pintarSemanas(); pintarAvance();
+  mostrar(location.hash.slice(1) || 'hoy', false);
+})();
+</script>
+</body>
+</html>
