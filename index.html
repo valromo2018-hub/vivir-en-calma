@@ -1544,5 +1544,22 @@ footer .wrap{padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.875rem;bo
   mostrar(location.hash.slice(1) || 'hoy', false);
 })();
 </script>
+<script>
+(function(){
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function(){ navigator.serviceWorker.register('./sw.js').catch(function(){}); });
+  }
+  var nota = null;
+  function senal(){
+    if (navigator.onLine) { if (nota) { nota.remove(); nota = null; } return; }
+    if (nota) return;
+    nota = document.createElement('p');
+    nota.className = 'nota';
+    nota.textContent = 'Sin internet. Tu app funciona igual y guarda lo que anotes. Las meditaciones de YouTube sí necesitan señal.';
+    var w = document.querySelector('main .wrap'); if (w) w.insertBefore(nota, w.firstChild);
+  }
+  window.addEventListener('online', senal); window.addEventListener('offline', senal); senal();
+})();
+</script>
 </body>
 </html>
